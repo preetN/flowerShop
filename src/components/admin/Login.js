@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import LoginIcon from "@mui/icons-material/Login";
-import {
-  IconButton,
-  Button,
-  TextField,
-  Stack,
-  Box,
-  ButtonGroup,
-  ToggleButtonGroup,
-  ToggleButton,
-  Paper,
-} from "@mui/material";
+import { IconButton, TextField, Stack, Paper } from "@mui/material";
 function Login() {
   const [value, setValue] = useState("");
   return (
@@ -33,7 +23,7 @@ function Login() {
             <TextField
               required
               id="standard-required"
-              label="Required"
+              label="UserName"
               value={value}
               onChange={(e) => setValue(e.target.value)}
               error={!value}
@@ -50,7 +40,7 @@ function Login() {
             <IconButton size="large" variant="outlined" color="secondary">
               <LoginIcon />
             </IconButton>
-          </Stack>{" "}
+          </Stack>
         </Paper>
       </Stack>
 
