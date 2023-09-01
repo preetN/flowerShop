@@ -1,7 +1,7 @@
 import { Box, Button, Paper, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
-// import { auth } from "../config/FireBase";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/FireBase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 function Signup() {
   const [form, setForm] = useState({});
   const handleOnChange = (e) => {
