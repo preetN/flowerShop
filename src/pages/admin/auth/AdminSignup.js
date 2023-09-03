@@ -1,9 +1,9 @@
 import { Button, Paper, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { auth } from "../../config/FireBase";
+import { auth } from "../../../config/FireBase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import Notification from "../notification/Notification";
-function Signup() {
+import Notification from "../../../components/notification/Notification";
+function AdminSignup() {
   const [form, setForm] = useState({});
   const [helptext, setHelpText] = useState("");
   const [openSnackbar, setOpenSnackBar] = useState({
@@ -48,7 +48,6 @@ function Signup() {
         setOpenSnackBar({
           open: true,
           severity: "error",
-
           message: errorMessage,
         });
       });
@@ -130,4 +129,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default AdminSignup;
