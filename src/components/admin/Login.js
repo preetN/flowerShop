@@ -1,8 +1,38 @@
 import React, { useState } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import { IconButton, TextField, Stack, Paper } from "@mui/material";
+import { auth } from "../../config/FireBase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import Notification from "../notification/Notification";
 function Login() {
-  const [value, setValue] = useState("");
+  const [form, setForm] = useState({});
+  const [openSnackbar, setOpenSnackBar] = useState({
+    open: false,
+    message: "snackbar",
+  });
+  const handleOnChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, form.email, form.password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setOpenSnackBar({
+          open: true,
+          severity: "success",
+          message: "Welcome " + user.email,
+        });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setOpenSnackBar({
+          open: true,
+          severity: "error",
+          message: errorMessage,
+        });
+      });
+  };
   return (
     <div>
       <Stack
@@ -12,6 +42,8 @@ function Login() {
       >
         <Paper elevation={4}>
           <Stack
+            component={"form"}
+            onSubmit={handleOnSubmit}
             sx={{
               width: "300px",
               p: 2,
@@ -23,39 +55,32 @@ function Login() {
             <TextField
               required
               id="standard-required"
-              label="UserName"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              error={!value}
-              helperText={!value ? "Required" : "Don't share"}
+              label="User Email"
+              type="email"
+              name="email"
               variant="standard"
+              onChange={handleOnChange}
             />
             <TextField
               id="standard-password-input"
               label="Password"
               type="password"
-              autoComplete="current-password"
+              name="password"
               variant="standard"
+              onChange={handleOnChange}
             />
-            <IconButton size="large" variant="outlined" color="secondary">
+            <IconButton
+              type="submit"
+              size="large"
+              variant="outlined"
+              color="secondary"
+            >
               <LoginIcon />
             </IconButton>
           </Stack>
+          <Notification setOpenSnackBar={setOpenSnackBar} {...openSnackbar} />
         </Paper>
       </Stack>
-
-      {/* <Stack>
-        <Button startIcon={<LoginIcon />}>Login</Button>
-
-        <ButtonGroup variant="outlined" orientation="horizontal" color="error">
-          <Button>Left</Button>
-          <Button>Right</Button>
-        </ButtonGroup>
-        <ToggleButtonGroup>
-          <ToggleButton value="bold"></ToggleButton>
-          <ToggleButton value="uderlined"></ToggleButton>
-        </ToggleButtonGroup>
-      </Stack> */}
     </div>
   );
 }
