@@ -1,9 +1,13 @@
 import { Button, Paper, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { auth } from "../../../config/FireBase";
+import { auth, db } from "../../../config/FireBase";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Notification from "../../../components/notification/Notification";
 function AdminSignup() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({});
   const [helptext, setHelpText] = useState("");
   const [openSnackbar, setOpenSnackBar] = useState({
@@ -36,11 +40,17 @@ function AdminSignup() {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        //creating admin named database and adding admin information to it
+        const { password, confirmpassword, ...rest } = form;
+        setDoc(doc(db, "admin", user.uid), rest)
+          .then(() => console.log("Done"))
+          .catch(() => console.log("Error"));
         setOpenSnackBar({
           open: true,
           severity: "success",
           message: "Welcome " + user.email,
         });
+        navigate("/admin-dashboard");
       })
       .catch((error) => {
         const errorMessage = error.message;
