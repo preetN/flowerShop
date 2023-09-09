@@ -5,8 +5,8 @@ import { auth } from "../../../config/FireBase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Notification from "../../../components/notification/Notification";
 import { useNavigate } from "react-router-dom";
-import { setAdmin } from "../adminSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { getAdminAction } from "../redux_firebase/adminAction";
 function AdminLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function AdminLogin() {
           severity: "success",
           message: "Welcome " + user.email,
         });
-        dispatch(setAdmin(user));
+        dispatch(getAdminAction(user.uid));
         navigate("/admin-dashboard");
       })
       .catch((error) => {

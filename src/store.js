@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import adminReducer from "../src/pages/admin/adminSlice";
+import adminReducer from "./pages/admin/redux_firebase/adminSlice";
 export const store = configureStore({
   reducer: {
     admin: adminReducer,
