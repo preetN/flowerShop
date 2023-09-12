@@ -1,8 +1,8 @@
 import React from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
 
-function Order() {
-  return <AdminLayout>Order page</AdminLayout>;
+function Bouquet() {
+  return <AdminLayout>Bouquet</AdminLayout>;
 }
 
-export default Order;
+export default Bouquet;

@@ -11,9 +11,21 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-const pages = ["Products", "Pricing", "Blog"];
+import { useDispatch, useSelector } from "react-redux";
+import { setAdmin } from "./../../pages/admin/redux_firebase/adminSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/FireBase";
+const pages = [
+  { page: "Orders", path: "/orders" },
+  { page: "Customers", path: "/customers" },
+  { page: "Bouquet", path: "/bouquet" },
+];
 
 function Header() {
+  const { admin } = useSelector((state) => state.admin);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(null);
   const handleOpenNavMenu = (event) => {
     setOpen(event.currentTarget);
@@ -21,8 +33,16 @@ function Header() {
   const handleCloseNavMenu = () => {
     setOpen(null);
   };
+  const handleOnSignout = () => {
+    signOut(auth).then(() => {
+      dispatch(setAdmin({}));
+    });
+
+    console.log("SignedOut ", admin);
+    navigate("/admin-login");
+  };
   return (
-    <AppBar>
+    <AppBar position="static" sx={{ backgroundColor: "pink" }}>
       <Container>
         <Toolbar>
           <Box
@@ -48,10 +68,10 @@ function Header() {
             <Box sx={{ display: "flex", flexDirection: "coloum" }}>
               {pages.map((page) => (
                 <Button
-                  key={page}
+                  key={page.page}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  {page}
+                  <Link to={page.path}>{page.page}</Link>
                 </Button>
               ))}
             </Box>
@@ -96,10 +116,15 @@ function Header() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.page}>
+                  <Link to={page.path} style={{ textDecoration: "none" }}>
+                    <Button>{page.page}</Button>
+                  </Link>
                 </MenuItem>
               ))}
+              <MenuItem key="signout">
+                <Button onClick={handleOnSignout}>SignOut</Button>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

@@ -10,8 +10,8 @@ import { getAdminAction } from "../redux_firebase/adminAction";
 function AdminLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { admin } = useSelector((state) => state.admin);
+  console.log("admin uid ", admin.uid);
   useEffect(() => {
     admin?.uid && navigate("/admin-dashboard");
   }, [admin, navigate]);
@@ -28,14 +28,12 @@ function AdminLogin() {
     signInWithEmailAndPassword(auth, form.email, form.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
         setOpenSnackBar({
           open: true,
           severity: "success",
           message: "Welcome " + user.email,
         });
         dispatch(getAdminAction(user.uid));
-        navigate("/admin-dashboard");
       })
       .catch((error) => {
         const errorMessage = error.message;

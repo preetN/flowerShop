@@ -5,8 +5,7 @@ export const getAdminAction = (uid) => async (dispatch) => {
   const docRef = doc(db, "admin", uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    console.log(docSnap.data());
-    dispatch(setAdmin(docSnap.data()));
+    dispatch(setAdmin({ uid, ...docSnap.data() }));
   } else {
     console.log("No such document");
   }
