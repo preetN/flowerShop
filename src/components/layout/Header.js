@@ -16,12 +16,6 @@ import { setAdmin } from "./../../pages/admin/redux_firebase/adminSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/FireBase";
-const pages = [
-  { page: "Orders", path: "/orders" },
-  { page: "Customers", path: "/customers" },
-  { page: "Bouquet", path: "/bouquet" },
-];
-
 function Header() {
   const { admin } = useSelector((state) => state.admin);
   const navigate = useNavigate();
@@ -42,7 +36,7 @@ function Header() {
     navigate("/admin-login");
   };
   return (
-    <AppBar position="static" sx={{ backgroundColor: "pink" }}>
+    <AppBar position="static">
       <Container>
         <Toolbar>
           <Box
@@ -56,24 +50,25 @@ function Header() {
             <Typography
               variant="h6"
               component="a"
+              color="secondary"
               href="/admin-dashboard"
               sx={{
                 mr: 2,
                 textDecoration: "none",
-                color: "white",
               }}
             >
               Flower Shop
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "coloum" }}>
-              {pages.map((page) => (
-                <Button
-                  key={page.page}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  <Link to={page.path}>{page.page}</Link>
+              <Link to="/profile" style={{ textDecoration: "none" }}>
+                <Button sx={{ display: "block" }} color="secondary">
+                  Profile
                 </Button>
-              ))}
+              </Link>
+
+              <Button onClick={handleOnSignout} color="secondary">
+                SignOut
+              </Button>
             </Box>
           </Box>
           <Box
@@ -85,13 +80,13 @@ function Header() {
             }}
           >
             <Typography
-              variant="h5"
+              variant="h6"
               component="a"
               href="/admin-dashboard"
+              color="secondary"
               sx={{
                 mr: 2,
                 textDecoration: "none",
-                color: "white",
               }}
             >
               Flower Shop
@@ -102,7 +97,7 @@ function Header() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="secondary"
             >
               {open ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
@@ -115,13 +110,11 @@ function Header() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.page}>
-                  <Link to={page.path} style={{ textDecoration: "none" }}>
-                    <Button>{page.page}</Button>
-                  </Link>
-                </MenuItem>
-              ))}
+              <MenuItem key="profile">
+                <Link to="/profile" style={{ textDecoration: "none" }}>
+                  <Button>Profile</Button>
+                </Link>
+              </MenuItem>
               <MenuItem key="signout">
                 <Button onClick={handleOnSignout}>SignOut</Button>
               </MenuItem>

@@ -11,14 +11,27 @@ import { useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/FireBase";
 import { getAdminAction } from "./pages/admin/redux_firebase/adminAction";
-import Bouquet from "./pages/admin/Bouquet";
+import Bouquet from "./pages/admin/bouquet/Bouquet";
+import { red, green } from "@mui/material/colors";
+import { createTheme, ThemeProvider } from "@mui/material";
+import AddBouquet from "./pages/admin/bouquet/AddBouquet";
 function App() {
+  const color_theme = createTheme({
+    palette: {
+      primary: {
+        main: red[100],
+      },
+      secondary: {
+        main: green[900],
+      },
+    },
+  });
   const dispatch = useDispatch();
   onAuthStateChanged(auth, (user) => {
     user?.uid && dispatch(getAdminAction(user.uid));
   });
   return (
-    <div>
+    <ThemeProvider theme={color_theme}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin-login" element={<AdminLogin />} />
@@ -56,10 +69,18 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/addbouquet"
+          element={
+            <PrivateRoute>
+              <AddBouquet />
+            </PrivateRoute>
+          }
+        />
 
         <Route path="/*" element={<p>Url unavailable</p>} />
       </Routes>
-    </div>
+    </ThemeProvider>
   );
 }
 

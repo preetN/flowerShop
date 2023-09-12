@@ -1,40 +1,48 @@
-import { List, Box, ListItem } from "@mui/material";
+import { List, Box, ListItem, Button } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
 import ContactPageIcon from "@mui/icons-material/ContactPage";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 function SideNav() {
+  const pages = [
+    {
+      page: "Dashboard",
+      icon: <DashboardIcon />,
+      path: "/admin-dashboard",
+    },
+    {
+      page: "Bouquet",
+      icon: <LocalFloristIcon />,
+      path: "/bouquet",
+    },
+    {
+      page: "Customers",
+      icon: <ContactPageIcon />,
+      path: "/customers",
+    },
+    {
+      page: "Orders",
+      icon: <ShoppingBasketIcon />,
+      path: "/orders",
+    },
+  ];
   return (
-    <Box sx={{ background: "neutral" }}>
+    <Box bgcolor="text.secondary">
       <List>
-        <ListItem>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText>Dashboard</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <LocalFloristIcon />
-          </ListItemIcon>
-          <ListItemText>Bouquet</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <ContactPageIcon />
-          </ListItemIcon>
-          <ListItemText> Customers</ListItemText>
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <ShoppingBasketIcon />
-          </ListItemIcon>
-          <ListItemText> Orders</ListItemText>
-        </ListItem>
+        {pages.map((page) => (
+          <ListItem>
+            <Link to={page.path} style={{ textDecoration: "none" }}>
+              <Button>
+                <ListItemIcon>{page.icon}</ListItemIcon>
+                <ListItemText>{page.page}</ListItemText>
+              </Button>
+            </Link>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
