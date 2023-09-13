@@ -15,6 +15,8 @@ import Bouquet from "./pages/admin/bouquet/Bouquet";
 import { red, green } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material";
 import AddBouquet from "./pages/admin/bouquet/AddBouquet";
+import { ReactNotifications } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 function App() {
   const color_theme = createTheme({
     palette: {
@@ -32,6 +34,7 @@ function App() {
   });
   return (
     <ThemeProvider theme={color_theme}>
+      <ReactNotifications />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin-login" element={<AdminLogin />} />

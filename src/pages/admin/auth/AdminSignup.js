@@ -4,19 +4,46 @@ import { auth, db } from "../../../config/FireBase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import Notification from "../../../components/notification/Notification";
+import { Store } from "react-notifications-component";
+import { notification } from "../../../components/notification/Notify";
+import CustomInput from "../../../components/custominput/CustomInput";
+
 function AdminSignup() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({});
   const [helptext, setHelpText] = useState("");
-  const [openSnackbar, setOpenSnackBar] = useState({
-    open: false,
-    message: "snackbar",
-  });
-  const handleOnChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const inputfield = [
+    {
+      id: "firstname",
+      name: "fname",
+      label: "First Name",
+      variant: "standard",
+    },
+    { id: "lastname", name: "lname", label: "Last Name", variant: "standard" },
+    {
+      id: "email",
+      name: "email",
+      label: "Email",
+      type: "email",
+      variant: "standard",
+    },
+    {
+      id: "phoneno",
+      name: "pno",
+      label: "Phone No.",
+      type: "number",
+      variant: "standard",
+    },
+    {
+      id: "password",
+      name: "password",
+      label: "Password",
+      type: "password",
+      variant: "standard",
+    },
+  ];
+
   const handleOnFocus = (e) => {
     if (form.password !== form.confirmpassword) {
       console.log(form.password, form.confirmpassword);
@@ -29,36 +56,38 @@ function AdminSignup() {
     console.log(form);
     //Signup oprertions
     if (helptext === "didn't match") {
-      setOpenSnackBar({
-        open: true,
-        severity: "warning",
+      Store.addNotification({
+        ...notification,
+        title: "Fail",
         message: "Passwords didn't match",
+        type: "warning",
       });
       return;
     }
     createUserWithEmailAndPassword(auth, form.email, form.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
         //creating admin named database and adding admin information to it
         const { password, confirmpassword, ...rest } = form;
         setDoc(doc(db, "admin", user.uid), rest)
           .then(() => console.log("Done"))
           .catch(() => console.log("Error"));
-        setOpenSnackBar({
-          open: true,
-          severity: "success",
+        Store.addNotification({
+          ...notification,
+          title: "LogIn successful",
           message: "Welcome " + user.email,
+          type: "success",
         });
         navigate("/admin-dashboard");
       })
       .catch((error) => {
         const errorMessage = error.message;
         console.log(errorMessage);
-        setOpenSnackBar({
-          open: true,
-          severity: "error",
+        Store.addNotification({
+          ...notification,
+          title: "Fail",
           message: errorMessage,
+          type: "danger",
         });
       });
   };
@@ -80,47 +109,18 @@ function AdminSignup() {
           }}
           onSubmit={handleOnSubmit}
         >
+          {inputfield.map((input) => (
+            <CustomInput
+              {...input}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+            />
+          ))}
           <TextField
-            onChange={handleOnChange}
-            id="firstname"
-            name="fname"
-            label="First Name"
-            variant="standard"
-          />
-          <TextField
-            onChange={handleOnChange}
-            id="lastname"
-            name="lname"
-            label="Last Name"
-            variant="standard"
-          />
-          <TextField
-            onChange={handleOnChange}
-            id="email"
-            name="email"
-            label="Email"
-            type="email"
-            variant="standard"
-          />
-          <TextField
-            onChange={handleOnChange}
-            id="phoneno"
-            name="pno"
-            label="Phone No."
-            type="number"
-            variant="standard"
-          />
-
-          <TextField
-            onChange={handleOnChange}
-            id="password"
-            name="password"
-            label="Password"
-            type="password"
-            variant="standard"
-          />
-          <TextField
-            onChange={handleOnChange}
+            onChange={(e) =>
+              setForm({ ...form, [e.target.name]: e.target.value })
+            }
             onBlur={handleOnFocus}
             id="confirmpassword"
             name="confirmpassword"
@@ -133,7 +133,6 @@ function AdminSignup() {
             SignUp
           </Button>
         </Stack>
-        <Notification setOpenSnackBar={setOpenSnackBar} {...openSnackbar} />
       </Paper>
     </Stack>
   );

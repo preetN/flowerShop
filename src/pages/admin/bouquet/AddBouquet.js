@@ -1,20 +1,59 @@
 import React, { useState } from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
-import { Button, Paper, TextField, Stack, InputAdornment } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Button, Paper, Stack, InputAdornment } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../config/FireBase";
+import { Store } from "react-notifications-component";
+import CustomInput from "../../../components/custominput/CustomInput";
+import { notification } from "../../../components/notification/Notify";
 function AddBouquet() {
   const [form, setForm] = useState({});
-  const handleOnChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const inputfield = [
+    {
+      label: "Bouquet Name",
+      type: "text",
+      color: "secondary",
+      name: "bname",
+      variant: "filled",
+    },
+    {
+      label: "Bouquet Description",
+      type: "text",
+      color: "secondary",
+      name: "description",
+      variant: "filled",
+    },
+    {
+      label: "Image",
+      color: "secondary",
+      type: "url",
+      name: "img",
+      variant: "filled",
+    },
+    {
+      label: "Price",
+      variant: "filled",
+      color: "secondary",
+      name: "price",
+      type: "number",
+      InputProps: {
+        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+      },
+    },
+  ];
+  const navigate = useNavigate();
   const handleOnAdd = (e) => {
     e.preventDefault();
     addDoc(collection(db, "bouquet"), form)
       .then(() => {
-        console.log("fone");
-        return setForm("");
+        Store.addNotification({
+          ...notification,
+          title: "Wonderful!",
+          message: "Bouquet successfully added to the database",
+          type: "success",
+        });
+        return navigate("/bouquet");
       })
       .catch(() => console.log("Error"));
   };
@@ -35,6 +74,7 @@ function AddBouquet() {
       >
         <Paper elevation={4}>
           <Stack
+            id="formki"
             component={"form"}
             sx={{
               minWidth: "400px",
@@ -44,44 +84,14 @@ function AddBouquet() {
             spacing={2}
             onSubmit={handleOnAdd}
           >
-            <TextField
-              label="Bouquet Name"
-              type="text"
-              color="secondary"
-              name="bname"
-              variant="filled"
-              onChange={handleOnChange}
-            />
-            <TextField
-              label="Bouquet Description"
-              color="secondary"
-              type="textarea"
-              rows={10}
-              name="description"
-              variant="filled"
-              onChange={handleOnChange}
-            />
-            <TextField
-              label="Image"
-              color="secondary"
-              type="url"
-              name="img"
-              variant="filled"
-              onChange={handleOnChange}
-            />
-            <TextField
-              label="Price"
-              variant="filled"
-              color="secondary"
-              name="price"
-              type="number"
-              onChange={handleOnChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                ),
-              }}
-            />
+            {inputfield.map((input) => (
+              <CustomInput
+                {...input}
+                onChange={(e) =>
+                  setForm({ ...form, [e.target.name]: e.target.value })
+                }
+              />
+            ))}
             <Button type="submit">Add</Button>
           </Stack>
         </Paper>
