@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../../../config/FireBase";
 import { setBouquet } from "./bouquetSlice";
 import { Store } from "react-notifications-component";
@@ -22,4 +22,7 @@ export const getAllBouquetAction = () => async (dispatch) => {
       type: "warning",
     });
   }
+};
+export const deleteBouquetAction = async (id) => {
+  await deleteDoc(doc(db, "bouquet", id));
 };
