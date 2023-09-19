@@ -33,8 +33,8 @@ function SideNav() {
   return (
     <Box bgcolor="text.secondary">
       <List>
-        {pages.map((page) => (
-          <ListItem>
+        {pages.map((page, i) => (
+          <ListItem key={i}>
             <Link to={page.path} style={{ textDecoration: "none" }}>
               <Button>
                 <ListItemIcon>{page.icon}</ListItemIcon>

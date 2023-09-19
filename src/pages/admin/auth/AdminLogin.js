@@ -74,9 +74,10 @@ function AdminLogin() {
             spacing={2}
             direction={"column"}
           >
-            {inputfield.map((input) => (
+            {inputfield.map((input, i) => (
               <CustomInput
                 {...input}
+                key={i}
                 onChange={(e) =>
                   setForm({ ...form, [e.target.name]: e.target.value })
                 }

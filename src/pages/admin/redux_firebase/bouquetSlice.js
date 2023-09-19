@@ -2,18 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   bouquetlist: [],
+  bouquet: {},
 };
 
 export const bouquetSlice = createSlice({
   name: "bouquet",
   initialState,
   reducers: {
-    setBouquet: (state, action) => {
+    setBouquetList: (state, action) => {
       state.bouquetlist = action.payload;
+    },
+    setBouquet: (state, action) => {
+      state.bouquet = action.payload;
     },
   },
 });
 
-export const { setBouquet } = bouquetSlice.actions;
+export const { setBouquetList, setBouquet } = bouquetSlice.actions;
 
 export default bouquetSlice.reducer;

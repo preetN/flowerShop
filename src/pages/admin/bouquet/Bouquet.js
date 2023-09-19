@@ -10,23 +10,27 @@ import {
   TableCell,
   Paper,
   TableBody,
-  Modal,
-  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
   deleteBouquetAction,
   getAllBouquetAction,
+  getBouquetInfoAction,
 } from "../redux_firebase/bouquetAction";
 import { useDispatch, useSelector } from "react-redux";
+import CustomModal from "../../../components/customModal/CustomModal";
 function Bouquet() {
   const [openModal, setOpenModal] = useState(false);
-
+  const [modalValue, setModalValue] = useState({});
   const dispatch = useDispatch();
   const { bouquetlist } = useSelector((state) => state.bouquet);
+  const { bouquet } = useSelector((state) => state.bouquet);
   useEffect(() => {
     dispatch(getAllBouquetAction());
   }, [dispatch, bouquetlist]);
+  useEffect(() => {
+    setModalValue(bouquet);
+  }, [bouquet]);
   //Page is re-rendering too many times
   const handleOnRemove = (id) => {
     window.confirm("Are you sure you want to remove ");
@@ -36,6 +40,10 @@ function Bouquet() {
   const handleOnUpdate = (id) => {
     console.log("update ", id);
     setOpenModal(true);
+    dispatch(getBouquetInfoAction(id));
+    console.log(bouquet);
+    setModalValue(bouquet);
+    console.log("Bouquet: ", modalValue);
   };
   const handleCloseModal = () => setOpenModal(false);
   return (
@@ -79,36 +87,10 @@ function Bouquet() {
                     >
                       Remove
                     </Button>
-                    <Modal
-                      open={openModal}
-                      onClose={handleCloseModal}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%, -50%)",
-                          width: 400,
-                          bgcolor: "background.paper",
-                          p: 4,
-                        }}
-                      >
-                        <Typography
-                          id="modal-modal-title"
-                          variant="h6"
-                          component="h2"
-                        >
-                          Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                          Duis mollis, est non commodo luctus, nisi erat
-                          porttitor ligula.
-                        </Typography>
-                      </Box>
-                    </Modal>
+                    <CustomModal
+                      openModal={openModal}
+                      handleCloseModal={handleCloseModal}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
