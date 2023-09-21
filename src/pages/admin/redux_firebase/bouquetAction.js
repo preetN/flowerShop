@@ -30,12 +30,20 @@ export const getAllBouquetAction = () => async (dispatch) => {
     });
   }
 };
-export const deleteBouquetAction = async (id) => {
+export const deleteBouquetAction = (id) => async (dispatch) => {
   await deleteDoc(doc(db, "bouquet", id));
+  dispatch(getAllBouquetAction());
+  Store.addNotification({
+    ...notification,
+    title: "Success",
+    message: "Bouquet deleted successfully",
+    type: "warning",
+  });
 };
-export const updateBouquetAction = (id, data) => {
+export const updateBouquetAction = (id, data) => async (dispatch) => {
   const docRef = doc(db, "bouquet", id);
   setDoc(docRef, data, { merge: true });
+  dispatch(getAllBouquetAction());
 };
 export const getBouquetInfoAction = (id) => async (dispatch) => {
   try {

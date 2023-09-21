@@ -7,6 +7,8 @@ import { db } from "../../../config/FireBase";
 import { Store } from "react-notifications-component";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { notification } from "../../../components/notification/Notify";
+import { useDispatch } from "react-redux";
+import { getAllBouquetAction } from "../redux_firebase/bouquetAction";
 function AddBouquet() {
   const [form, setForm] = useState({});
   const inputfield = [
@@ -43,6 +45,7 @@ function AddBouquet() {
     },
   ];
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleOnAdd = (e) => {
     e.preventDefault();
     addDoc(collection(db, "bouquet"), form)
@@ -53,6 +56,7 @@ function AddBouquet() {
           message: "Bouquet successfully added to the database",
           type: "success",
         });
+        dispatch(getAllBouquetAction());
         return navigate("/bouquet");
       })
       .catch(() => console.log("Error"));

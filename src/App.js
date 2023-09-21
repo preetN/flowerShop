@@ -17,6 +17,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import AddBouquet from "./pages/admin/bouquet/AddBouquet";
 import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+import { useEffect } from "react";
+import { getAllBouquetAction } from "./pages/admin/redux_firebase/bouquetAction";
 function App() {
   const color_theme = createTheme({
     palette: {
@@ -31,6 +33,9 @@ function App() {
   const dispatch = useDispatch();
   onAuthStateChanged(auth, (user) => {
     user?.uid && dispatch(getAdminAction(user.uid));
+  });
+  useEffect(() => {
+    dispatch(getAllBouquetAction());
   });
   return (
     <ThemeProvider theme={color_theme}>

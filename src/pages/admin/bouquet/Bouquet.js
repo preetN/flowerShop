@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import {
   Button,
@@ -15,37 +15,29 @@ import { Link } from "react-router-dom";
 import {
   deleteBouquetAction,
   getAllBouquetAction,
-  getBouquetInfoAction,
 } from "../redux_firebase/bouquetAction";
 import { useDispatch, useSelector } from "react-redux";
 import CustomModal from "../../../components/customModal/CustomModal";
 function Bouquet() {
-  const [openModal, setOpenModal] = useState(false);
-  const [modalValue, setModalValue] = useState({});
   const dispatch = useDispatch();
   const { bouquetlist } = useSelector((state) => state.bouquet);
-  const { bouquet } = useSelector((state) => state.bouquet);
-  useEffect(() => {
-    dispatch(getAllBouquetAction());
-  }, [dispatch, bouquetlist]);
-  useEffect(() => {
-    setModalValue(bouquet);
-  }, [bouquet]);
-  //Page is re-rendering too many times
+  const [openModal, setOpenModal] = useState(false);
+  const [modalValue, setModalValue] = useState({});
+
   const handleOnRemove = (id) => {
-    window.confirm("Are you sure you want to remove ");
-    console.log("deleting ", id);
-    deleteBouquetAction(id);
+    if (window.confirm("Are you sure you want to remove ")) {
+      dispatch(deleteBouquetAction(id));
+    }
   };
-  const handleOnUpdate = (id) => {
-    console.log("update ", id);
+  const handleOnUpdate = (bouquet) => {
+    const { id, ...rest } = bouquet;
     setOpenModal(true);
-    dispatch(getBouquetInfoAction(id));
-    console.log(bouquet);
     setModalValue(bouquet);
     console.log("Bouquet: ", modalValue);
   };
   const handleCloseModal = () => setOpenModal(false);
+  console.log("hello");
+
   return (
     <AdminLayout>
       <Link to="/addbouquet">
@@ -80,7 +72,7 @@ function Bouquet() {
                   <TableCell align="right">{l.description}</TableCell>
                   <TableCell align="right">{l.price}</TableCell>
                   <TableCell align="right">
-                    <Button onClick={() => handleOnUpdate(l.id)}>Update</Button>
+                    <Button onClick={() => handleOnUpdate(l)}>Update</Button>
                     <Button
                       onClick={() => handleOnRemove(l.id)}
                       color="secondary"
