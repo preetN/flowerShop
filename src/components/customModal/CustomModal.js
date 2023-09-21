@@ -6,8 +6,34 @@ import {
   FormControl,
   InputLabel,
   Input,
+  Button,
 } from "@mui/material";
-function CustomModal({ openModal, handleCloseModal }) {
+import CustomInput from "../custominput/CustomInput";
+function CustomModal({
+  setOpenModal,
+  openModal,
+  handleCloseModal,
+  modalValue,
+}) {
+  const input = [
+    { label: "ID", value: modalValue.id },
+    { label: "price", type: "number", value: modalValue.price },
+    {
+      label: "name",
+      type: "text",
+      value: modalValue.bname,
+    },
+    {
+      label: "Description",
+      type: "text",
+      value: modalValue.description,
+    },
+  ];
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    console.log("You updated");
+    setOpenModal(false);
+  };
   return (
     <Modal
       BackdropProps={{
@@ -21,6 +47,7 @@ function CustomModal({ openModal, handleCloseModal }) {
       aria-describedby="modal-modal-description"
     >
       <Box
+        component={"form"}
         sx={{
           position: "absolute",
           top: "50%",
@@ -30,20 +57,15 @@ function CustomModal({ openModal, handleCloseModal }) {
           bgcolor: "white",
           p: 4,
         }}
+        onSubmit={handleOnSubmit}
       >
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Update Bouquet details
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {/* <FormControl>
-        <InputLabel htmlFor="name">Name</InputLabel>
-        <Input id="name" value={modalValue.name} />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="des">Id</InputLabel>
-        <Input id="des" value={modalValue.description} />
-      </FormControl> */}
-        </Typography>
+        {input.map((item, i) => (
+          <CustomInput key={i} {...item} />
+        ))}
+
+        <Button type="submit" color="secondary" variant="contained">
+          Submit
+        </Button>
       </Box>
     </Modal>
   );
