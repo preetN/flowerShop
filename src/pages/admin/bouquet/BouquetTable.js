@@ -11,10 +11,14 @@ import {
   TableBody,
 } from "@mui/material";
 import CustomModal from "../../../components/customModal/CustomModal";
-import { deleteBouquetAction } from "../redux_firebase/bouquetAction";
+import {
+  deleteBouquetAction,
+  getAllBouquetAction,
+} from "../redux_firebase/bouquetAction";
 import { useDispatch, useSelector } from "react-redux";
 function BouquetTable() {
   const dispatch = useDispatch();
+  const [displayList, setDisplayList] = useState([]);
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const [openModal, setOpenModal] = useState(false);
   const [modalValue, setModalValue] = useState({});
@@ -28,7 +32,12 @@ function BouquetTable() {
     setModalValue(bouquet);
   };
   const handleCloseModal = () => setOpenModal(false);
-
+  useEffect(() => {
+    dispatch(getAllBouquetAction());
+  }, [dispatch]);
+  useEffect(() => {
+    setDisplayList(bouquetlist);
+  }, [bouquetlist]);
   return (
     <Box component="div">
       <TableContainer component={Paper}>
@@ -43,7 +52,7 @@ function BouquetTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {bouquetlist.map((item) => (
+            {displayList.map((item) => (
               <TableRow
                 key={item.bname}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

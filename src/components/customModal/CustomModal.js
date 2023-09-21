@@ -1,44 +1,46 @@
-import React from "react";
-import {
-  Modal,
-  Box,
-  Typography,
-  FormControl,
-  InputLabel,
-  Input,
-  Button,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Modal, Box, Button } from "@mui/material";
 import CustomInput from "../custominput/CustomInput";
+import { useDispatch } from "react-redux";
+import { updateBouquetAction } from "../../pages/admin/redux_firebase/bouquetAction";
 function CustomModal({
   setOpenModal,
   openModal,
   handleCloseModal,
   modalValue,
 }) {
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({});
+  useEffect(() => {
+    setForm(modalValue);
+  }, [modalValue]);
   const input = [
-    { label: "ID", value: modalValue.id },
-    { label: "price", type: "number", value: modalValue.price },
+    { label: "price", type: "number", name: "price", value: form.price },
     {
       label: "name",
       type: "text",
-      value: modalValue.bname,
+      name: "bname",
+      value: form.bname,
     },
     {
       label: "Description",
       type: "text",
-      value: modalValue.description,
+      name: "description",
+      value: form.description,
     },
   ];
   const handleOnSubmit = (e) => {
     e.preventDefault();
     console.log("You updated");
+    console.log(form);
+    dispatch(updateBouquetAction(form));
     setOpenModal(false);
   };
   return (
     <Modal
       BackdropProps={{
         style: {
-          backgroundColor: "rgba(240, 248, 255, 0.097)",
+          backgroundColor: "rgba(0, 0, 0, 0.076)",
         },
       }}
       open={openModal}
@@ -60,7 +62,13 @@ function CustomModal({
         onSubmit={handleOnSubmit}
       >
         {input.map((item, i) => (
-          <CustomInput key={i} {...item} />
+          <CustomInput
+            key={i}
+            {...item}
+            onChange={(e) =>
+              setForm({ ...form, [e.target.name]: e.target.value })
+            }
+          />
         ))}
 
         <Button type="submit" color="secondary" variant="contained">

@@ -40,11 +40,19 @@ export const deleteBouquetAction = (id) => async (dispatch) => {
     type: "warning",
   });
 };
-export const updateBouquetAction = (id, data) => async (dispatch) => {
-  const docRef = doc(db, "bouquet", id);
-  setDoc(docRef, data, { merge: true });
-  dispatch(getAllBouquetAction());
-};
+export const updateBouquetAction =
+  ({ id, ...rest }) =>
+  async (dispatch) => {
+    const docRef = doc(db, "bouquet", id);
+    await setDoc(docRef, rest, { merge: true });
+    dispatch(getAllBouquetAction());
+    Store.addNotification({
+      ...notification,
+      title: "Success",
+      message: "Bouquet updated successfully",
+      type: "warning",
+    });
+  };
 export const getBouquetInfoAction = (id) => async (dispatch) => {
   try {
     const docRef = doc(db, "bouquet", id);
