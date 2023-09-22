@@ -32,7 +32,6 @@ function Header() {
       dispatch(setAdmin({}));
     });
 
-    console.log("SignedOut ", admin);
     navigate("/admin-login");
   };
   return (
