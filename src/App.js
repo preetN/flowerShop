@@ -19,6 +19,7 @@ import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { useEffect } from "react";
 import { getAllBouquetAction } from "./pages/admin/redux_firebase/bouquetAction";
+import BouquetDetails from "./pages/user/BouquetDetails";
 function App() {
   const color_theme = createTheme({
     palette: {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-signup" element={<AdminSignup />} />
+        <Route path="bouquetdetails/:Id" element={<BouquetDetails />} />
 
         <Route
           path="/admin-dashboard"
