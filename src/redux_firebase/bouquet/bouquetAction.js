@@ -6,10 +6,10 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../../../config/FireBase";
+import { db } from "../../config/FireBase";
 import { setBouquetList, setBouquet } from "./bouquetSlice";
 import { Store } from "react-notifications-component";
-import { notification } from "../../../components/notification/Notify";
+import { notification } from "../../components/notification/Notify";
 export const getAllBouquetAction = () => async (dispatch) => {
   try {
     const bouquet = [];

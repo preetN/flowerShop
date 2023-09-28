@@ -14,7 +14,7 @@ import CustomModal from "../../../components/customModal/CustomModal";
 import {
   deleteBouquetAction,
   getAllBouquetAction,
-} from "../redux_firebase/bouquetAction";
+} from "../../../redux_firebase/bouquet/bouquetAction";
 import { useDispatch, useSelector } from "react-redux";
 function BouquetTable() {
   const dispatch = useDispatch();

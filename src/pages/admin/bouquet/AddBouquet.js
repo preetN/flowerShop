@@ -8,7 +8,7 @@ import { Store } from "react-notifications-component";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { notification } from "../../../components/notification/Notify";
 import { useDispatch } from "react-redux";
-import { getAllBouquetAction } from "../redux_firebase/bouquetAction";
+import { getAllBouquetAction } from "../../../redux_firebase/bouquet/bouquetAction";
 function AddBouquet() {
   const [form, setForm] = useState({});
   const inputfield = [

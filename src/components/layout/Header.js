@@ -11,28 +11,14 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setAdmin } from "./../../pages/admin/redux_firebase/adminSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/FireBase";
-function Header() {
-  const { admin } = useSelector((state) => state.admin);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+import { Link } from "react-router-dom";
+function Header({ admin, handleOnSignout }) {
   const [open, setOpen] = useState(null);
   const handleOpenNavMenu = (event) => {
     setOpen(event.currentTarget);
   };
   const handleCloseNavMenu = () => {
     setOpen(null);
-  };
-  const handleOnSignout = () => {
-    signOut(auth).then(() => {
-      dispatch(setAdmin({}));
-    });
-
-    navigate("/admin-login");
   };
   return (
     <AppBar position="static">
@@ -50,7 +36,7 @@ function Header() {
               variant="h6"
               component="a"
               color="secondary"
-              href="/admin-dashboard"
+              href="/"
               sx={{
                 mr: 2,
                 textDecoration: "none",
@@ -64,10 +50,15 @@ function Header() {
                   Profile
                 </Button>
               </Link>
-
-              <Button onClick={handleOnSignout} color="secondary">
-                SignOut
-              </Button>
+              {admin?.uid ? (
+                <Button onClick={handleOnSignout} color="secondary">
+                  SignOut
+                </Button>
+              ) : (
+                <>
+                  <Button color="secondary">SignIn / SignUp</Button>
+                </>
+              )}
             </Box>
           </Box>
           <Box
@@ -81,7 +72,7 @@ function Header() {
             <Typography
               variant="h6"
               component="a"
-              href="/admin-dashboard"
+              href="/"
               color="secondary"
               sx={{
                 mr: 2,
@@ -114,9 +105,15 @@ function Header() {
                   <Button>Profile</Button>
                 </Link>
               </MenuItem>
-              <MenuItem key="signout">
-                <Button onClick={handleOnSignout}>SignOut</Button>
-              </MenuItem>
+              {admin?.uid ? (
+                <MenuItem key="signout">
+                  <Button onClick={handleOnSignout}>SignOut</Button>
+                </MenuItem>
+              ) : (
+                <MenuItem key="signin">
+                  <Button>SignUp / SignIn </Button>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>

@@ -5,6 +5,7 @@ import Carousel from "react-material-ui-carousel";
 import { Box, ListItem, ListItemButton, List } from "@mui/material";
 import Card from "../../components/card/Card";
 import { Link } from "react-router-dom";
+import Header from "../../components/layout/Header";
 function Home() {
   const { bouquetlist } = useSelector((state) => state.bouquet);
   console.log(bouquetlist);
@@ -22,13 +23,16 @@ function Home() {
   };
   return (
     <div>
-      <Carousel>
+      {/* <Carousel>
         {bouquetlist.map((item) => (
           <img src={item.img} alt="bouquet" width={"100%"} height={"300px"} />
         ))}
-      </Carousel>
-      <Box>Home Login/Signout Products</Box>
-      <Box display={"flex"}>
+      </Carousel> */}
+      <div style={{ position: "sticky", top: "0" }}>
+        <Header />
+      </div>
+
+      <Box display={"flex"} margin={"20px"}>
         <Box width={"300px"}>
           <List sx={{ color: "text.secondary" }}>
             <ListItem>

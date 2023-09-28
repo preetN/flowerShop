@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Box, Button } from "@mui/material";
 import CustomInput from "../custominput/CustomInput";
 import { useDispatch } from "react-redux";
-import { updateBouquetAction } from "../../pages/admin/redux_firebase/bouquetAction";
+import { updateBouquetAction } from "../../redux_firebase/bouquet/bouquetAction";
 function CustomModal({
   setOpenModal,
   openModal,

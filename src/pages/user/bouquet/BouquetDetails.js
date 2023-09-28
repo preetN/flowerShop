@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getBouquetInfoAction } from "../admin/redux_firebase/bouquetAction";
+import { getBouquetInfoAction } from "../../../redux_firebase/bouquet/bouquetAction";
 
 function BouquetDetails() {
   const { id } = useParams();

@@ -2,15 +2,17 @@ import "./App.css";
 import { Route, Routes } from "react-router";
 import AdminLogin from "./pages/admin/auth/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import Order from "./pages/admin/Order";
-import Customers from "./pages/admin/Customers";
+import Order from "./pages/admin/orders/Order";
+import Customers from "./pages/admin/customers/Customers";
 import AdminSignup from "./pages/admin/auth/AdminSignup";
 import Home from "./pages/user/Home";
+import Login from "./pages/user/auth/Login";
+import Signup from "./pages/user/auth/Signup";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import { useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/FireBase";
-import { getAdminAction } from "./pages/admin/redux_firebase/adminAction";
+import { getAdminAction } from "./redux_firebase/admin/adminAction";
 import Bouquet from "./pages/admin/bouquet/Bouquet";
 import { red, green } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material";
@@ -18,8 +20,8 @@ import AddBouquet from "./pages/admin/bouquet/AddBouquet";
 import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { useEffect } from "react";
-import { getAllBouquetAction } from "./pages/admin/redux_firebase/bouquetAction";
-import BouquetDetails from "./pages/user/BouquetDetails";
+import { getAllBouquetAction } from "./redux_firebase/bouquet/bouquetAction";
+import BouquetDetails from "./pages/user/bouquet/BouquetDetails";
 function App() {
   const color_theme = createTheme({
     palette: {
@@ -45,6 +47,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-signup" element={<AdminSignup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
         <Route path="bouquetdetails/:Id" element={<BouquetDetails />} />
 
         <Route

@@ -1,4 +1,4 @@
-import { db } from "../../../config/FireBase";
+import { db } from "../../config/FireBase";
 import { doc, getDoc } from "firebase/firestore";
 import { setAdmin } from "./adminSlice";
 export const getAdminAction = (uid) => async (dispatch) => {

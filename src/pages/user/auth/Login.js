@@ -5,20 +5,19 @@ import { auth } from "../../../config/FireBase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAdminAction } from "../../../redux_firebase/admin/adminAction";
 import { Store } from "react-notifications-component";
 import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
+import { getUserAction } from "../../../redux_firebase/user/userAction";
 import bckImg from "../../../asset/images/background.avif";
-
-function AdminLogin() {
+function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { admin } = useSelector((state) => state.admin);
-  console.log("admin uid ", admin.uid);
+  const { user } = useSelector((state) => state.user);
+  console.log("user uid ", user.uid);
   useEffect(() => {
-    admin?.uid && navigate("/admin-dashboard");
-  }, [admin, navigate]);
+    user?.uid && navigate("/");
+  }, [user, navigate]);
   const [form, setForm] = useState({});
   const inputfield = [
     {
@@ -45,7 +44,7 @@ function AdminLogin() {
           message: "Welcome " + user.email,
           type: "success",
         });
-        dispatch(getAdminAction(user.uid));
+        dispatch(getUserAction(user.uid));
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -66,7 +65,9 @@ function AdminLogin() {
       }}
     >
       <Stack
-        sx={{ height: "100vh" }}
+        sx={{
+          height: "100vh",
+        }}
         justifyContent={"center"}
         alignItems={"center"}
       >
@@ -107,4 +108,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default Login;
