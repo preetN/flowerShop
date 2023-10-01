@@ -17,7 +17,7 @@ function AdminLayout({ children }) {
       dispatch(setAdmin({}));
     });
 
-    navigate("/");
+    navigate("/admin-login");
   };
   return (
     <>

@@ -1,3 +1,40 @@
 body {
   margin: 0;
 }
+.hero {
+  display: flex;
+  justify-content: space-between;
+  background-image: url("../src/asset/images/home_background.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: "300px";
+}
+.pendulum {
+  display: flex;
+  margin-left: 50px;
+  position: relative;
+  transform-origin: 50% 0;
+  animation: pendu 2s linear infinite alternate;
+}
+.welcome {
+  font-size: 100px;
+  margin-top: 40px;
+  background: linear-gradient(rgb(236, 131, 164), rgb(212, 255, 0));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: 1s;
+}
+.welcome:hover {
+  font-size: 120px;
+  background: linear-gradient(green, black);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes pendu {
+  from {
+    transform: translateY(-5px) rotate(9deg);
+  }
+  to {
+    transform: translateY(-5px) rotate(-9deg);
+  }
+}

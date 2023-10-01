@@ -7,11 +7,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Store } from "react-notifications-component";
 import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
-
+import { useDispatch } from "react-redux";
+import { getUserAction } from "../../../redux_firebase/user/userAction";
 function Signup() {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({});
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({ type: "user" });
   const [helptext, setHelpText] = useState("");
   const inputfield = [
     {
@@ -78,7 +79,9 @@ function Signup() {
           message: "Welcome " + user.email,
           type: "success",
         });
-        navigate("/admin-dashboard");
+        dispatch(getUserAction(user.uid));
+
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;

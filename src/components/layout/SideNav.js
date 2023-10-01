@@ -7,6 +7,7 @@ import ContactPageIcon from "@mui/icons-material/ContactPage";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 function SideNav() {
   const pages = [
     {
@@ -28,6 +29,11 @@ function SideNav() {
       page: "Orders",
       icon: <ShoppingBasketIcon />,
       path: "/orders",
+    },
+    {
+      page: "New Admin",
+      icon: <PersonAddIcon />,
+      path: "/admin-signup",
     },
   ];
   return (

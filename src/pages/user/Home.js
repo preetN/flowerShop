@@ -6,7 +6,10 @@ import { Box, ListItem, ListItemButton, List } from "@mui/material";
 import Card from "../../components/card/Card";
 import { Link } from "react-router-dom";
 import Header from "../../components/layout/Header";
+import pic from "../../asset/images/hanging.png";
+import hanging2 from "../../asset/images/hanging2.png";
 function Home() {
+  const { user } = useSelector((state) => state.user);
   const { bouquetlist } = useSelector((state) => state.bouquet);
   console.log(bouquetlist);
   const handleOnNew = () => {
@@ -28,8 +31,25 @@ function Home() {
           <img src={item.img} alt="bouquet" width={"100%"} height={"300px"} />
         ))}
       </Carousel> */}
+      <div className="hero">
+        <div className="pendulum">
+          <img alt="hanging " src={pic} height={"200px"} />
+          <div>
+            <img
+              alt="hanging2"
+              src={hanging2}
+              height={"100px"}
+              style={{ marginTop: 0 }}
+            />
+          </div>
+        </div>
+        <div className="welcome">
+          <p>Welcome</p>
+        </div>
+        <div style={{ width: "100px" }}></div>
+      </div>
       <div style={{ position: "sticky", top: "0" }}>
-        <Header />
+        <Header admin={user} />
       </div>
 
       <Box display={"flex"} margin={"20px"}>

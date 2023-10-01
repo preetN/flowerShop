@@ -7,11 +7,11 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Store } from "react-notifications-component";
 import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
+import AdminLayout from "../../../components/layout/AdminLayout";
 
 function AdminSignup() {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({ type: "admin" });
   const [helptext, setHelpText] = useState("");
   const inputfield = [
     {
@@ -53,7 +53,7 @@ function AdminSignup() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
+
     //Signup oprertions
     if (helptext === "didn't match") {
       Store.addNotification({
@@ -75,9 +75,10 @@ function AdminSignup() {
         Store.addNotification({
           ...notification,
           title: "LogIn successful",
-          message: "Welcome " + user.email,
+          message: "Successfully created new admin " + user.email,
           type: "success",
         });
+
         navigate("/admin-dashboard");
       })
       .catch((error) => {
@@ -92,49 +93,51 @@ function AdminSignup() {
       });
   };
   return (
-    <Stack
-      sx={{ height: "90vh" }}
-      justifyContent={"center"}
-      alignItems={"center"}
-    >
-      <Paper elevation={4}>
-        <Stack
-          component={"form"}
-          direction={"column"}
-          spacing={2}
-          sx={{
-            p: 2,
-            width: "300px",
-            borderRadius: 1,
-          }}
-          onSubmit={handleOnSubmit}
-        >
-          {inputfield.map((input) => (
-            <CustomInput
-              {...input}
+    <AdminLayout>
+      <Stack
+        sx={{ height: "90vh" }}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Paper elevation={4}>
+          <Stack
+            component={"form"}
+            direction={"column"}
+            spacing={2}
+            sx={{
+              p: 2,
+              width: "300px",
+              borderRadius: 1,
+            }}
+            onSubmit={handleOnSubmit}
+          >
+            {inputfield.map((input) => (
+              <CustomInput
+                {...input}
+                onChange={(e) =>
+                  setForm({ ...form, [e.target.name]: e.target.value })
+                }
+              />
+            ))}
+            <TextField
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
+              onBlur={handleOnFocus}
+              id="confirmpassword"
+              name="confirmpassword"
+              label="Confirm Password"
+              type="password"
+              variant="standard"
+              helperText={helptext}
             />
-          ))}
-          <TextField
-            onChange={(e) =>
-              setForm({ ...form, [e.target.name]: e.target.value })
-            }
-            onBlur={handleOnFocus}
-            id="confirmpassword"
-            name="confirmpassword"
-            label="Confirm Password"
-            type="password"
-            variant="standard"
-            helperText={helptext}
-          />
-          <Button color="secondary" variant="contained" type="submit">
-            SignUp
-          </Button>
-        </Stack>
-      </Paper>
-    </Stack>
+            <Button color="secondary" variant="contained" type="submit">
+              Add Admin
+            </Button>
+          </Stack>
+        </Paper>
+      </Stack>
+    </AdminLayout>
   );
 }
 

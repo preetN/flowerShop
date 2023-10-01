@@ -46,12 +46,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-signup" element={<AdminSignup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
         <Route path="bouquetdetails/:Id" element={<BouquetDetails />} />
-
+        <Route
+          path="/admin-signup"
+          element={
+            <PrivateRoute>
+              <AdminSignup />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/admin-dashboard"
           element={
