@@ -32,7 +32,7 @@ function Home() {
         ))}
       </Carousel> */}
       <div className="hero">
-        <div className="pendulum">
+        <div className="pendulum" style={{ marginLeft: "50px" }}>
           <img alt="hanging " src={pic} height={"200px"} />
           <div>
             <img
@@ -46,7 +46,17 @@ function Home() {
         <div className="welcome">
           <p>Welcome</p>
         </div>
-        <div style={{ width: "100px" }}></div>
+        <div className="pendulum" style={{ marginRight: "50px" }}>
+          <div>
+            <img
+              alt="hanging2"
+              src={hanging2}
+              height={"100px"}
+              style={{ marginTop: 0 }}
+            />
+          </div>
+          <img alt="hanging " src={pic} height={"200px"} />
+        </div>
       </div>
       <div style={{ position: "sticky", top: "0" }}>
         <Header admin={user} />

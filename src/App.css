@@ -11,7 +11,6 @@ body {
 }
 .pendulum {
   display: flex;
-  margin-left: 50px;
   position: relative;
   transform-origin: 50% 0;
   animation: pendu 2s linear infinite alternate;
