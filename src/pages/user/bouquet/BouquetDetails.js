@@ -1,19 +1,28 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getBouquetInfoAction } from "../../../redux_firebase/bouquet/bouquetAction";
 
 function BouquetDetails() {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  dispatch(getBouquetInfoAction(id));
-  const { selectedBouquet } = useSelector((state) => state.bouquet);
+  console.log(id);
+  const { bouquetlist } = useSelector((state) => state.bouquet);
+  const [selectedBouquet, setSelectedBouquet] = useState({});
+  useEffect(() => {
+    const bouquet = bouquetlist.find((bouquet) => bouquet.id === id);
+    setSelectedBouquet(bouquet);
+  }, [bouquetlist, id]);
   console.log(selectedBouquet);
   return (
-    <Box>
-      Hello
-      <img src="" />
+    <Box display="flex" gap="20px" alignItems={"center"}>
+      <Box>
+        <img src={selectedBouquet.img} />
+      </Box>
+      <Box>
+        <Typography variant="h4">{selectedBouquet.bname}</Typography>
+        <Typography variant="p">{selectedBouquet.description}</Typography>
+        <Typography variant="h6">Price: ${selectedBouquet.price}</Typography>
+      </Box>
     </Box>
   );
 }

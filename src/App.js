@@ -48,8 +48,7 @@ function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
-        <Route path="bouquetdetails/:Id" element={<BouquetDetails />} />
+        <Route path="bouquetdetails/:id" element={<BouquetDetails />} />
         <Route
           path="/admin-signup"
           element={

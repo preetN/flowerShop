@@ -45,11 +45,6 @@ function Header({ admin, handleOnSignout }) {
               Flower Shop
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "coloum" }}>
-              <Link to="/profile" style={{ textDecoration: "none" }}>
-                <Button sx={{ display: "block" }} color="secondary">
-                  Profile
-                </Button>
-              </Link>
               {admin?.uid ? (
                 <Button onClick={handleOnSignout} color="secondary">
                   SignOut
@@ -100,11 +95,6 @@ function Header({ admin, handleOnSignout }) {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem key="profile">
-                <Link to="/profile" style={{ textDecoration: "none" }}>
-                  <Button>Profile</Button>
-                </Link>
-              </MenuItem>
               {admin?.uid ? (
                 <MenuItem key="signout">
                   <Button onClick={handleOnSignout}>SignOut</Button>
