@@ -2,7 +2,9 @@ import { Box, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { addOrderAction } from "../../../redux_firebase/order/orderAction";
 function BouquetDetails() {
+  // Login to continue
   const { id } = useParams();
   console.log(id);
   const { bouquetlist } = useSelector((state) => state.bouquet);
@@ -12,7 +14,13 @@ function BouquetDetails() {
     setSelectedBouquet(bouquet);
   }, [bouquetlist, id]);
   console.log(selectedBouquet);
-  const handleOnOrder = () => {};
+  const handleOnOrder = (form) => {
+    // addOrderAction(form);
+    // Order Date
+    // Order By
+    // status:"pending", "approved", "declined"
+    // in order table
+  };
   return (
     <div
       style={{
@@ -36,7 +44,11 @@ function BouquetDetails() {
           <Typography variant="h4">{selectedBouquet.bname}</Typography>
           <Typography variant="p">{selectedBouquet.description}</Typography>
           <Typography variant="h6">Price: ${selectedBouquet.price}</Typography>
-          <Button variant="outlined" color="secondary" onClick={handleOnOrder}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => handleOnOrder(selectedBouquet)}
+          >
             Click to Order
           </Button>
         </Box>
