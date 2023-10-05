@@ -1,4 +1,10 @@
-import * as React from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/FireBase";
+import { setUser } from "../../redux_firebase/user/userSlice";
+import { Link, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,15 +17,11 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import { setAdmin } from "../../redux_firebase/admin/adminSlice";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/FireBase";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-function Header() {
-  const dispatch = useDispatch();
+
+function PublicHeader() {
   const navigate = useNavigate();
-  const { admin } = useSelector((state) => state.admin);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const [open, setOpen] = useState(null);
   const handleOpenNavMenu = (event) => {
     setOpen(event.currentTarget);
@@ -29,10 +31,10 @@ function Header() {
   };
   const handleOnSignout = () => {
     signOut(auth).then(() => {
-      dispatch(setAdmin({}));
+      dispatch(setUser({}));
     });
 
-    navigate("/admin-login");
+    navigate("/");
   };
   return (
     <AppBar position="static">
@@ -59,12 +61,27 @@ function Header() {
               Flower Shop
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "coloum" }}>
-              {admin?.uid ? (
-                <Button onClick={handleOnSignout} color="secondary">
-                  SignOut
-                </Button>
+              <Link to="/products">
+                <Button color="secondary">Products</Button>
+              </Link>
+              <Link to="/contact">
+                <Button color="secondary">Contact Us</Button>
+              </Link>
+              {user?.uid ? (
+                <>
+                  <Link to="/profile">
+                    <Button color="secondary">Profile</Button>
+                  </Link>
+                  <Button onClick={handleOnSignout} color="secondary">
+                    SignOut
+                  </Button>
+                </>
               ) : (
-                <Button color="secondary">SignIn / SignUp</Button>
+                <>
+                  <Link to="/login">
+                    <Button color="secondary">SignIn / SignUp</Button>
+                  </Link>
+                </>
               )}
             </Box>
           </Box>
@@ -107,7 +124,7 @@ function Header() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {admin?.uid ? (
+              {user?.uid ? (
                 <MenuItem key="signout">
                   <Button onClick={handleOnSignout}>SignOut</Button>
                 </MenuItem>
@@ -123,4 +140,5 @@ function Header() {
     </AppBar>
   );
 }
-export default Header;
+
+export default PublicHeader;

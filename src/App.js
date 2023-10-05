@@ -22,6 +22,7 @@ import "react-notifications-component/dist/theme.css";
 import { useEffect } from "react";
 import { getAllBouquetAction } from "./redux_firebase/bouquet/bouquetAction";
 import BouquetDetails from "./pages/user/bouquet/BouquetDetails";
+
 function App() {
   const color_theme = createTheme({
     palette: {

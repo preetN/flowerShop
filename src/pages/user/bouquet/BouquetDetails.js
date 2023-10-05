@@ -1,8 +1,7 @@
-import { Box, Stack, Typography, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import background from "../../../asset/images/background2.jpeg";
 function BouquetDetails() {
   const { id } = useParams();
   console.log(id);
@@ -13,6 +12,7 @@ function BouquetDetails() {
     setSelectedBouquet(bouquet);
   }, [bouquetlist, id]);
   console.log(selectedBouquet);
+  const handleOnOrder = () => {};
   return (
     <div
       style={{
@@ -36,7 +36,7 @@ function BouquetDetails() {
           <Typography variant="h4">{selectedBouquet.bname}</Typography>
           <Typography variant="p">{selectedBouquet.description}</Typography>
           <Typography variant="h6">Price: ${selectedBouquet.price}</Typography>
-          <Button variant="outlined" color="secondary">
+          <Button variant="outlined" color="secondary" onClick={handleOnOrder}>
             Click to Order
           </Button>
         </Box>

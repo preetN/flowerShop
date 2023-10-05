@@ -3,25 +3,10 @@ import { Box } from "@mui/material";
 import Header from "./Header";
 import Footer from "./Footer";
 import SideNav from "./SideNav";
-import { setAdmin } from "../../redux_firebase/admin/adminSlice";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/FireBase";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 function AdminLayout({ children }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { admin } = useSelector((state) => state.admin);
-  const handleOnSignout = () => {
-    signOut(auth).then(() => {
-      dispatch(setAdmin({}));
-    });
-
-    navigate("/admin-login");
-  };
   return (
     <>
-      <Header admin={admin} handleOnSignout={handleOnSignout} />
+      <Header />
 
       <Box sx={{ display: "flex" }}>
         <SideNav />
