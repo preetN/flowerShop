@@ -5,6 +5,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  addDoc,
 } from "firebase/firestore";
 import { db } from "../../config/FireBase";
 import { setBouquetList, setBouquet } from "./bouquetSlice";
@@ -73,4 +74,17 @@ export const getBouquetInfoAction = (id) => async (dispatch) => {
       type: "warning",
     });
   }
+};
+export const addBouquetAction = (form) => {
+  addDoc(collection(db, "bouquet"), form)
+    .then(() => {
+      Store.addNotification({
+        ...notification,
+        title: "Wonderful!",
+        message: "Bouquet successfully added to the database",
+        type: "success",
+      });
+      getAllBouquetAction();
+    })
+    .catch(() => console.log("Error"));
 };

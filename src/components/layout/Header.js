@@ -51,7 +51,9 @@ function Header({ admin, handleOnSignout }) {
                 </Button>
               ) : (
                 <>
-                  <Button color="secondary">SignIn / SignUp</Button>
+                  <Link to="/login">
+                    <Button color="secondary">SignIn / SignUp</Button>
+                  </Link>
                 </>
               )}
             </Box>

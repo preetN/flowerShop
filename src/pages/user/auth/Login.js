@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import LoginIcon from "@mui/icons-material/Login";
-import { IconButton, Stack, Paper } from "@mui/material";
+import { IconButton, Stack, Paper, Box } from "@mui/material";
 import { auth } from "../../../config/FireBase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Store } from "react-notifications-component";
 import { notification } from "../../../components/notification/Notify";
@@ -57,13 +57,7 @@ function Login() {
       });
   };
   return (
-    <div
-      style={{
-        backgroundImage: ` url(${bckImg})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-    >
+    <div className="background">
       <Stack
         sx={{
           height: "100vh",
@@ -103,6 +97,15 @@ function Login() {
             </IconButton>
           </Stack>
         </Paper>
+        <Box>
+          <Link className="link" to="/signup">
+            Don't have an account, Signup Now
+          </Link>
+
+          <Link className="link" to="/admin-login">
+            Login as Admin
+          </Link>
+        </Box>
       </Stack>
     </div>
   );

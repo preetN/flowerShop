@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/layout/Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Carousel from "react-material-ui-carousel";
 import { Box, ListItem, ListItemButton, List } from "@mui/material";
 import Card from "../../components/card/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import pic from "../../asset/images/hanging.png";
 import hanging2 from "../../asset/images/hanging2.png";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/FireBase";
+import { setUser } from "../../redux_firebase/user/userSlice";
 function Home() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { bouquetlist } = useSelector((state) => state.bouquet);
-  console.log(bouquetlist);
+  const [displayList, setDisplayList] = useState([]);
+  useEffect(() => {
+    setDisplayList(bouquetlist);
+  }, [bouquetlist]);
   const handleOnNew = () => {
-    alert("hi");
+    const newest = [...displayList].sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    console.log(newest);
+    setDisplayList(newest);
   };
   const handleOnPopular = () => {
     alert("hi");
   };
   const handleOnLow = () => {
-    alert("hi");
+    const lowestPrice = [...displayList].sort((a, b) => a.price - b.price);
+    console.log(lowestPrice);
+    setDisplayList(lowestPrice);
   };
   const handleOnHigh = () => {
-    alert("hi");
+    const highestPrice = [...displayList].sort((a, b) => b.price - a.price);
+    console.log(highestPrice);
+    setDisplayList(highestPrice);
+  };
+
+  const handleOnSignout = () => {
+    signOut(auth).then(() => {
+      dispatch(setUser({}));
+    });
+
+    navigate("/");
   };
   return (
     <div>
@@ -59,7 +83,7 @@ function Home() {
         </div>
       </div>
       <div style={{ position: "sticky", top: "0" }}>
-        <Header admin={user} />
+        <Header admin={user} handleOnSignout={handleOnSignout} />
       </div>
 
       <Box display={"flex"} margin={"20px"}>
@@ -91,7 +115,7 @@ function Home() {
           justifyContent={"space-evenly"}
           flexWrap={"wrap"}
         >
-          {bouquetlist.map((item, i) => (
+          {displayList.map((item, i) => (
             <Link
               to={`/bouquetdetails/${item.id}`}
               style={{ textDecoration: "none" }}

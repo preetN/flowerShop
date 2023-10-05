@@ -1,6 +1,18 @@
 body {
   margin: 0;
 }
+.link {
+  text-decoration: none;
+  color: "primary";
+  font-size: 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.background {
+  background-repeat: no-repeat;
+  background-image: url("./asset/images/background.avif");
+  background-size: cover;
+}
 .hero {
   display: flex;
   justify-content: space-between;

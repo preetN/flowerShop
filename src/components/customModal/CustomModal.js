@@ -28,6 +28,12 @@ function CustomModal({
       name: "description",
       value: form.description,
     },
+    {
+      label: "Date",
+      type: "date",
+      name: "date",
+      value: form.date,
+    },
   ];
   const handleOnSubmit = (e) => {
     e.preventDefault();

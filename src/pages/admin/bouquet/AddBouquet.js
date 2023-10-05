@@ -8,7 +8,10 @@ import { Store } from "react-notifications-component";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { notification } from "../../../components/notification/Notify";
 import { useDispatch } from "react-redux";
-import { getAllBouquetAction } from "../../../redux_firebase/bouquet/bouquetAction";
+import {
+  getAllBouquetAction,
+  addBouquetAction,
+} from "../../../redux_firebase/bouquet/bouquetAction";
 function AddBouquet() {
   const [form, setForm] = useState({});
   const inputfield = [
@@ -18,6 +21,7 @@ function AddBouquet() {
       color: "secondary",
       name: "bname",
       variant: "filled",
+      required: "required",
     },
     {
       label: "Bouquet Description",
@@ -25,6 +29,7 @@ function AddBouquet() {
       color: "secondary",
       name: "description",
       variant: "filled",
+      required: "required",
     },
     {
       label: "Image",
@@ -32,6 +37,7 @@ function AddBouquet() {
       type: "url",
       name: "img",
       variant: "filled",
+      required: "required",
     },
     {
       label: "Price",
@@ -39,27 +45,28 @@ function AddBouquet() {
       color: "secondary",
       name: "price",
       type: "number",
+      required: "required",
       InputProps: {
         startAdornment: <InputAdornment position="start">$</InputAdornment>,
       },
+    },
+    {
+      label: "Date",
+      color: "secondary",
+      type: "date",
+      name: "date",
+      variant: "filled",
+      required: "required",
+      helperText: "Date on which, this bouquet is introduced",
     },
   ];
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleOnAdd = (e) => {
     e.preventDefault();
-    addDoc(collection(db, "bouquet"), form)
-      .then(() => {
-        Store.addNotification({
-          ...notification,
-          title: "Wonderful!",
-          message: "Bouquet successfully added to the database",
-          type: "success",
-        });
-        dispatch(getAllBouquetAction());
-        return navigate("/bouquet");
-      })
-      .catch(() => console.log("Error"));
+    console.log(form);
+    addBouquetAction(form);
+    navigate("/bouquet");
   };
   return (
     <AdminLayout>

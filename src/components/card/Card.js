@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function MediaCard({ img, bname, description, price }) {
+export default function MediaCard({ img, bname, description, date, price }) {
   return (
     <Card sx={{ width: 345 }}>
       <CardMedia sx={{ height: 140 }} image={img} title="bouquet" />
@@ -14,11 +14,14 @@ export default function MediaCard({ img, bname, description, price }) {
         <Typography gutterBottom variant="h5" component="div">
           {bname}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="subtitle1" color="text.secondary">
           {description}
         </Typography>
-        <Typography variant="body2" color="secondary">
+        <Typography variant="body1" color="secondary">
           Price: ${price}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Date Added: {date}
         </Typography>
       </CardContent>
       <CardActions>
