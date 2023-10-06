@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { addOrderAction } from "../../../redux_firebase/order/orderAction";
@@ -8,7 +8,6 @@ function BouquetDetails() {
   const { user } = useSelector((state) => state.user);
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const [selectedBouquet, setSelectedBouquet] = useState({});
   useEffect(() => {
@@ -28,7 +27,7 @@ function BouquetDetails() {
       status: "pending",
     };
     console.log(orderobj);
-    dispatch(addOrderAction(orderobj));
+    addOrderAction(orderobj);
     navigate("/order");
   };
   return (

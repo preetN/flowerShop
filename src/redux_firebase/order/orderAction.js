@@ -1,10 +1,18 @@
 import { db } from "../../config/FireBase";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  setDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 
 import { Store } from "react-notifications-component";
 import { notification } from "../../components/notification/Notify";
-import { setOrderList } from "./orderSlice";
-export const addOrderAction = (form) => (dispatch) => {
+import { setCurrentUserOrderList, setOrderList } from "./orderSlice";
+export const addOrderAction = (form) => {
   addDoc(collection(db, "order"), form)
     .then(() => {
       Store.addNotification({
@@ -19,7 +27,6 @@ export const addOrderAction = (form) => (dispatch) => {
       });
     })
     .catch(() => console.log("Error"));
-  dispatch(getAllOrderAction());
 };
 export const getAllOrderAction = () => async (dispatch) => {
   const querySnapshot = await getDocs(collection(db, "order"));
@@ -27,7 +34,32 @@ export const getAllOrderAction = () => async (dispatch) => {
   querySnapshot.forEach((doc) => {
     const id = doc.id;
     const data = doc.data();
+
     orders.push({ ...data, id });
   });
   dispatch(setOrderList(orders));
+};
+export const approveOrderAction = (id) => async (dispatch) => {
+  const orderRef = doc(db, "order", id);
+  await setDoc(orderRef, { status: "approved" }, { merge: true });
+  dispatch(getAllOrderAction());
+  Store.addNotification({
+    ...notification,
+    title: "Success",
+    message: "Order Approved",
+    type: "warning",
+  });
+};
+export const getUserOrderListAction = (email) => async (dispatch) => {
+  const compare = email != null ? email : "";
+  const q = query(collection(db, "order"), where("userEmail", "==", compare));
+  const list = [];
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    const id = doc.id;
+    const data = doc.data();
+
+    list.push({ ...data, id });
+  });
+  dispatch(setCurrentUserOrderList(list));
 };

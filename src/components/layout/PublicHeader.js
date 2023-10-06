@@ -72,6 +72,9 @@ function PublicHeader() {
                   <Link to="/profile">
                     <Button color="secondary">Profile</Button>
                   </Link>
+                  <Link to="/order">
+                    <Button color="secondary">Orders</Button>
+                  </Link>
                   <Button onClick={handleOnSignout} color="secondary">
                     SignOut
                   </Button>

@@ -10,16 +10,25 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  approveOrderAction,
+  getAllOrderAction,
+} from "../../../redux_firebase/order/orderAction";
 
 function OrderTable() {
+  const dispatch = useDispatch();
   const [displayList, setDisplayList] = useState([]);
   const { orderList } = useSelector((state) => state.order);
   useEffect(() => {
     setDisplayList(orderList);
   }, [orderList]);
-
-  const handleOnApprove = (item) => {};
+  useEffect(() => {
+    dispatch(getAllOrderAction());
+  }, [dispatch]);
+  const handleOnApprove = (item) => {
+    dispatch(approveOrderAction(item.id));
+  };
   return (
     <Box component="div">
       <TableContainer component={Paper}>

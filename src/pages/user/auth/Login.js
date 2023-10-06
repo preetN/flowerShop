@@ -10,6 +10,7 @@ import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { getUserAction } from "../../../redux_firebase/user/userAction";
 import bckImg from "../../../asset/images/background.avif";
+import { getUserOrderListAction } from "../../../redux_firebase/order/orderAction";
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function Login() {
   useEffect(() => {
     user?.uid && navigate("/");
   }, [user, navigate]);
+  dispatch(getUserOrderListAction(user.email));
   const [form, setForm] = useState({});
   const inputfield = [
     {

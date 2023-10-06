@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = { orderList: [] };
+const initialState = { orderList: [], currentUserOrderList: [] };
 export const orderSlice = createSlice({
   name: "order",
   initialState,
@@ -7,7 +7,10 @@ export const orderSlice = createSlice({
     setOrderList: (state, { payload }) => {
       state.orderList = payload;
     },
+    setCurrentUserOrderList: (state, { payload }) => {
+      state.currentUserOrderList = payload;
+    },
   },
 });
-export const { setOrderList } = orderSlice.actions;
+export const { setOrderList, setCurrentUserOrderList } = orderSlice.actions;
 export default orderSlice.reducer;
