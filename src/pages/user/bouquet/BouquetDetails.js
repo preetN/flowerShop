@@ -1,12 +1,14 @@
 import { Box, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import CloseIcon from "@mui/icons-material/Close";
 import { addOrderAction } from "../../../redux_firebase/order/orderAction";
 function BouquetDetails() {
-  // Login to continue
+  const { user } = useSelector((state) => state.user);
   const { id } = useParams();
-  console.log(id);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const [selectedBouquet, setSelectedBouquet] = useState({});
   useEffect(() => {
@@ -14,12 +16,20 @@ function BouquetDetails() {
     setSelectedBouquet(bouquet);
   }, [bouquetlist, id]);
   console.log(selectedBouquet);
-  const handleOnOrder = (form) => {
-    // addOrderAction(form);
-    // Order Date
-    // Order By
-    // status:"pending", "approved", "declined"
-    // in order table
+  const handleOnOrder = ({ bname, price, img }) => {
+    const date = new Date();
+    const orderobj = {
+      userId: user.uid,
+      userEmail: user.email,
+      itemName: bname,
+      itemPrice: price,
+      itemImg: img,
+      orderDate: date.toString(),
+      status: "pending",
+    };
+    console.log(orderobj);
+    dispatch(addOrderAction(orderobj));
+    navigate("/order");
   };
   return (
     <div
@@ -31,6 +41,12 @@ function BouquetDetails() {
         background: "linear-gradient(white,pink,white)",
       }}
     >
+      <div style={{ position: "fixed", top: 50, left: 50 }}>
+        <Link to="/">
+          <CloseIcon style={{ fontSize: 60 }} color="secondary" />
+        </Link>
+      </div>
+
       <Box display="flex" gap="20px" alignItems={"center"}>
         <Box>
           <img
@@ -44,13 +60,21 @@ function BouquetDetails() {
           <Typography variant="h4">{selectedBouquet.bname}</Typography>
           <Typography variant="p">{selectedBouquet.description}</Typography>
           <Typography variant="h6">Price: ${selectedBouquet.price}</Typography>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => handleOnOrder(selectedBouquet)}
-          >
-            Click to Order
-          </Button>
+          {user?.uid ? (
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => handleOnOrder(selectedBouquet)}
+            >
+              Click to Order
+            </Button>
+          ) : (
+            <Link style={{ textDecoration: "none" }} to="/login">
+              <Button color="secondary" variant="outlined">
+                SignIn to Order
+              </Button>
+            </Link>
+          )}
         </Box>
       </Box>
     </div>

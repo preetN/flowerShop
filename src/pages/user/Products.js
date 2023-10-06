@@ -3,8 +3,11 @@ import UserLayout from "../../components/layout/UserLayout";
 import { Box, ListItem, ListItemButton, List } from "@mui/material";
 import Card from "../../components/card/Card";
 import { Link } from "react-router-dom";
-function Products({ bouquetlist }) {
+import { useSelector } from "react-redux";
+function Products() {
   const [displayList, setDisplayList] = useState([]);
+
+  const { bouquetlist } = useSelector((state) => state.bouquet);
   useEffect(() => {
     setDisplayList(bouquetlist);
   }, [bouquetlist]);
@@ -59,7 +62,7 @@ function Products({ bouquetlist }) {
           justifyContent={"space-evenly"}
           flexWrap={"wrap"}
         >
-          {displayList.map((item, i) => (
+          {displayList?.map((item, i) => (
             <Link
               to={`/bouquetdetails/${item.id}`}
               style={{ textDecoration: "none" }}

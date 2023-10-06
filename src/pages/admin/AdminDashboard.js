@@ -3,9 +3,11 @@ import AdminLayout from "../../components/layout/AdminLayout";
 import { getAllUserAction } from "../../redux_firebase/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@mui/material";
+import { getAllOrderAction } from "../../redux_firebase/order/orderAction";
 function AdminDashboard() {
   const dispatch = useDispatch();
   dispatch(getAllUserAction());
+  dispatch(getAllOrderAction());
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const { admin } = useSelector((state) => state.admin);
   console.log(bouquetlist.length, " ", admin);

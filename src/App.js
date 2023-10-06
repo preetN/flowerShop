@@ -2,7 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router";
 import AdminLogin from "./pages/admin/auth/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import Order from "./pages/admin/orders/Order";
+import AdminOrder from "./pages/admin/orders/AdminOrder";
 import Customers from "./pages/admin/customers/Customers";
 import AdminSignup from "./pages/admin/auth/AdminSignup";
 import Home from "./pages/user/Home";
@@ -22,6 +22,8 @@ import "react-notifications-component/dist/theme.css";
 import { useEffect } from "react";
 import { getAllBouquetAction } from "./redux_firebase/bouquet/bouquetAction";
 import BouquetDetails from "./pages/user/bouquet/BouquetDetails";
+import Order from "./pages/user/order/Order";
+import Products from "./pages/user/Products";
 
 function App() {
   const color_theme = createTheme({
@@ -50,6 +52,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="bouquetdetails/:id" element={<BouquetDetails />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/products" element={<Products />} />
+
         <Route
           path="/admin-signup"
           element={
@@ -67,10 +72,10 @@ function App() {
           }
         />
         <Route
-          path="/orders"
+          path="/admin-orders"
           element={
             <PrivateRoute>
-              <Order />
+              <AdminOrder />
             </PrivateRoute>
           }
         />

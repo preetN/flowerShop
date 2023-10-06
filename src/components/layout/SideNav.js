@@ -28,7 +28,7 @@ function SideNav() {
     {
       page: "Orders",
       icon: <ShoppingBasketIcon />,
-      path: "/orders",
+      path: "/admin-orders",
     },
     {
       page: "New Admin",

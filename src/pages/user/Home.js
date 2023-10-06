@@ -6,8 +6,6 @@ import pic from "../../asset/images/hanging.png";
 import hanging2 from "../../asset/images/hanging2.png";
 import Products from "./Products";
 function Home() {
-  const { bouquetlist } = useSelector((state) => state.bouquet);
-
   return (
     <div>
       {/* <Carousel>
@@ -42,7 +40,7 @@ function Home() {
           <img alt="hanging " src={pic} height={"200px"} />
         </div>
       </div>
-      <Products bouquetlist={bouquetlist} />
+      <Products />
       <Footer />
     </div>
   );
