@@ -24,6 +24,7 @@ import { getAllBouquetAction } from "./redux_firebase/bouquet/bouquetAction";
 import BouquetDetails from "./pages/user/bouquet/BouquetDetails";
 import Order from "./pages/user/order/Order";
 import Products from "./pages/user/Products";
+import Profile from "./pages/user/Profile";
 
 function App() {
   const color_theme = createTheme({
@@ -54,7 +55,7 @@ function App() {
         <Route path="bouquetdetails/:id" element={<BouquetDetails />} />
         <Route path="/order" element={<Order />} />
         <Route path="/products" element={<Products />} />
-
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/admin-signup"
           element={
