@@ -37,7 +37,7 @@ function Order() {
                 <TableCell align="center">Order Ref Image</TableCell>
                 <TableCell align="center">Item Name</TableCell>
                 <TableCell align="center">Item Price</TableCell>
-                <TableCell align="center">Status</TableCell>
+                <TableCell align="center">Statu</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
