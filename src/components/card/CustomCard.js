@@ -28,9 +28,9 @@ export default function CustomCard({
           <CardMedia sx={{ height: 190 }} image={img} title="bouquet" />
           {/* <Button onClick={handleFlip}></Button> */}
         </Box>
-        <Box>
+        <Box sx={{ maxHeight: 190 }}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography gutterBottom variant="h6" component="div">
               {bname}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
