@@ -127,13 +127,37 @@ function PublicHeader() {
                 display: { xs: "block", md: "none" },
               }}
             >
+              <MenuItem key={"products"}>
+                <Link to="/products">
+                  <Button>Products</Button>
+                </Link>
+              </MenuItem>
+              <MenuItem key={"contact"}>
+                <Link to="/contact">
+                  <Button>Contact Us</Button>
+                </Link>
+              </MenuItem>
               {user?.uid ? (
-                <MenuItem key="signout">
-                  <Button onClick={handleOnSignout}>SignOut</Button>
-                </MenuItem>
+                <>
+                  <MenuItem key="profile">
+                    <Link to="/profile">
+                      <Button>Profile</Button>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem key={"order"}>
+                    <Link to="/order">
+                      <Button>Orders</Button>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem key="signout">
+                    <Button onClick={handleOnSignout}>SignOut</Button>
+                  </MenuItem>
+                </>
               ) : (
                 <MenuItem key="signin">
-                  <Button>SignUp / SignIn </Button>
+                  <Link to="/login">
+                    <Button>SignIn / SignUp</Button>
+                  </Link>
                 </MenuItem>
               )}
             </Menu>

@@ -50,6 +50,18 @@ export const approveOrderAction = (id) => async (dispatch) => {
     type: "warning",
   });
 };
+export const collectOrderAction = (item) => async (dispatch) => {
+  const orderRef = doc(db, "order", item.id);
+  await setDoc(orderRef, { status: "collected" }, { merge: true });
+  dispatch(getUserOrderListAction(item.userEmail));
+  Store.addNotification({
+    ...notification,
+    title: "Ready for collection",
+    message:
+      "This will send notification to shop staff that you are here to collect order",
+    type: "warning",
+  });
+};
 export const getUserOrderListAction = (email) => async (dispatch) => {
   const compare = email != null ? email : "";
   const q = query(collection(db, "order"), where("userEmail", "==", compare));

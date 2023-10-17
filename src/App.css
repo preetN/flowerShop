@@ -15,7 +15,7 @@ body {
 }
 .hero {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   background-image: url("../src/asset/images/home_background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -28,6 +28,8 @@ body {
   animation: pendu 2s linear infinite alternate;
 }
 .welcome {
+  display: flex;
+  justify-content: center;
   font-size: 100px;
   margin-top: 40px;
   background: linear-gradient(rgb(236, 131, 164), rgb(212, 255, 0));

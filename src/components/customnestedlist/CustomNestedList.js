@@ -6,9 +6,9 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
-import { Box, ListItem, Typography } from "@mui/material";
+import { Box, Button, ListItem, Typography } from "@mui/material";
 
-export default function CustomNestedList({ item }) {
+export default function CustomNestedList({ item, handleOnCollect }) {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -53,9 +53,28 @@ export default function CustomNestedList({ item }) {
                   <Typography variant="overline">Order Id:{item.id}</Typography>
                 </ListItem>
                 <ListItem>
-                  <Typography variant="overline">
-                    Collection: Shop Front
-                  </Typography>
+                  {item.status === "approved" ? (
+                    <>
+                      <Typography variant="overline">
+                        Order ready for collection
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => handleOnCollect(item)}
+                      >
+                        Collect
+                      </Button>
+                    </>
+                  ) : item.status === "collected" ? (
+                    <Typography variant="overline">
+                      Already Collected
+                    </Typography>
+                  ) : (
+                    <Typography variant="overline">
+                      Collection: Shop Front
+                    </Typography>
+                  )}
                 </ListItem>
               </List>
             </Box>

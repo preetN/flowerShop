@@ -9,11 +9,10 @@ function UserLayout({ children }) {
         <PublicHeader />
       </div>
 
-      <Box sx={{ display: "flex" }}>
-        <Box minHeight="72vh" margin="20px">
-          {children}
-        </Box>
+      <Box minHeight="72vh" margin="20px">
+        {children}
       </Box>
+
       <Footer />
     </>
   );
