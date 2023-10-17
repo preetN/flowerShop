@@ -17,13 +17,16 @@ function BouquetDetails() {
   console.log(selectedBouquet);
   const handleOnOrder = ({ bname, price, img }) => {
     const date = new Date();
+    const orderDate = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()}`;
     const orderobj = {
       userId: user.uid,
       userEmail: user.email,
       itemName: bname,
       itemPrice: price,
       itemImg: img,
-      orderDate: date.toString(),
+      orderDate: orderDate,
       status: "pending",
     };
     console.log(orderobj);
