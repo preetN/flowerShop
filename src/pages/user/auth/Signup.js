@@ -9,7 +9,6 @@ import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { useDispatch } from "react-redux";
 import { getUserAction } from "../../../redux_firebase/user/userAction";
-import bckImg from "../../../asset/images/background.avif";
 
 function Signup() {
   const navigate = useNavigate();

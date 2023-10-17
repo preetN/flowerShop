@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   admin: {},
+  adminList: [],
 };
 
 export const adminSlice = createSlice({
@@ -11,9 +12,12 @@ export const adminSlice = createSlice({
     setAdmin: (state, action) => {
       state.admin = action.payload;
     },
+    setAdminList: (state, action) => {
+      state.adminList = action.payload;
+    },
   },
 });
 
-export const { setAdmin } = adminSlice.actions;
+export const { setAdmin, setAdminList } = adminSlice.actions;
 
 export default adminSlice.reducer;

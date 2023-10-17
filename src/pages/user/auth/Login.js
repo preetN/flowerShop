@@ -9,7 +9,6 @@ import { Store } from "react-notifications-component";
 import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { getUserAction } from "../../../redux_firebase/user/userAction";
-import bckImg from "../../../asset/images/background.avif";
 import { getUserOrderListAction } from "../../../redux_firebase/order/orderAction";
 function Login() {
   const dispatch = useDispatch();

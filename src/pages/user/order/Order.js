@@ -34,11 +34,21 @@ function Order() {
     (item) => item.status === "collected"
   );
   const handleOnCollect = (item) => {
-    dispatch(collectOrderAction(item));
+    if (window.confirm("Have tou reached to collect your order")) {
+      dispatch(collectOrderAction(item));
+    }
   };
   return (
     <UserLayout>
-      <Typography>My Orders</Typography>
+      <Typography
+        position="sticky"
+        top="70px"
+        zIndex={99}
+        variant="h2"
+        sx={{ backgroundColor: "white" }}
+      >
+        My Orders
+      </Typography>
       <Box sx={{ width: "100%" }}>
         <TabContext value={value}>
           <Box>

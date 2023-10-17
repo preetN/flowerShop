@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import UserLayout from "../../components/layout/UserLayout";
 import { Box, ListItem, ListItemButton, List } from "@mui/material";
-import Card from "../../components/card/Card";
+import Card from "../../components/card/CustomCard";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import CustomCard from "../../components/card/CustomCard";
 function Products() {
   const [displayList, setDisplayList] = useState([]);
 
@@ -18,9 +19,7 @@ function Products() {
     console.log(newest);
     setDisplayList(newest);
   };
-  const handleOnPopular = () => {
-    alert("hi");
-  };
+
   const handleOnLow = () => {
     const lowestPrice = [...displayList].sort((a, b) => a.price - b.price);
     console.log(lowestPrice);
@@ -41,9 +40,7 @@ function Products() {
                 Newest first
               </ListItemButton>
             </ListItem>
-            <ListItem>
-              <ListItemButton onClick={handleOnPopular}>Popular</ListItemButton>
-            </ListItem>
+
             <ListItem>
               <ListItemButton onClick={handleOnLow}>
                 Low Price first
@@ -63,12 +60,11 @@ function Products() {
           flexWrap={"wrap"}
         >
           {displayList?.map((item, i) => (
-            <Link
-              to={`/bouquetdetails/${item.id}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Card key={i} {...item} />
-            </Link>
+            // <Link
+            //   to={`/bouquetdetails/${item.id}`}
+            //   style={{ textDecoration: "none" }}
+            // >
+            <CustomCard key={i} {...item} />
           ))}
         </Box>
       </Box>

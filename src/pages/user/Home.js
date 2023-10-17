@@ -1,12 +1,18 @@
 import React from "react";
 import Footer from "../../components/layout/Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import Carousel from "react-material-ui-carousel";
 import pic from "../../asset/images/hanging.png";
 import hanging2 from "../../asset/images/hanging2.png";
 import Products from "./Products";
 import { Box } from "@mui/material";
+import { getAllAdminAction } from "../../redux_firebase/admin/adminAction";
+
 function Home() {
+  const dispatch = useDispatch();
+
+  dispatch(getAllAdminAction());
+
   return (
     <div>
       {/* <Carousel>

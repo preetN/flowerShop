@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 function UserLayout({ children }) {
   return (
     <>
-      <div style={{ position: "sticky", top: "0" }}>
+      <div style={{ position: "sticky", top: "0", zIndex: 99 }}>
         <PublicHeader />
       </div>
 
