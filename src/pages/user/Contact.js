@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import UserLayout from "../../components/layout/UserLayout";
 import {
   Box,
@@ -10,8 +10,41 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Label } from "@mui/icons-material";
+import CustomInput from "../../components/custominput/CustomInput";
 
 function Contact() {
+  const [form, setForm] = useState({});
+  const inputfield = [
+    {
+      id: "firstname",
+      name: "firstname",
+      label: "First Name",
+      variant: "outlined",
+    },
+    {
+      id: "lastname",
+      name: "lastname",
+      label: "Last Name",
+      variant: "outlined",
+    },
+    {
+      id: "email",
+      name: "email",
+      label: "Email",
+      variant: "outlined",
+    },
+    {
+      id: "message",
+      name: "message",
+      label: "Message for Us",
+      variant: "outlined",
+      multiline: "multiline",
+      rows: "4",
+    },
+  ];
+  const handleOnChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
   const handleOnSubmit = (e) => {
     e.preventDefault();
     alert("hello");
@@ -44,32 +77,23 @@ function Contact() {
             onSubmit={handleOnSubmit}
           >
             <Box sx={{ display: "flex", gap: "10px" }}>
-              <TextField
-                id="firstname"
-                name="firstname"
-                label="First Name"
-                variant="outlined"
+              <CustomInput
+                {...inputfield[0]}
+                onChange={(e) => handleOnChange(e)}
               />
-              <TextField
-                id="lastname"
-                name="lastname"
-                label="Last Name"
-                variant="outlined"
+              <CustomInput
+                {...inputfield[1]}
+                onChange={(e) => handleOnChange(e)}
               />
             </Box>
-            <TextField
-              id="email"
-              name="email"
-              label="Email"
-              variant="outlined"
+
+            <CustomInput
+              {...inputfield[2]}
+              onChange={(e) => handleOnChange(e)}
             />
-            <TextField
-              id="message"
-              name="message"
-              label="Message for Us"
-              variant="outlined"
-              multiline
-              rows={4}
+            <CustomInput
+              {...inputfield[3]}
+              onChange={(e) => handleOnChange(e)}
             />
             <Button color="secondary" variant="contained" type="submit">
               Submit

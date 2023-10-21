@@ -9,6 +9,7 @@ import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { useDispatch } from "react-redux";
 import { getUserAction } from "../../../redux_firebase/user/userAction";
+import UserLayout from "../../../components/layout/UserLayout";
 
 function Signup() {
   const navigate = useNavigate();
@@ -96,50 +97,52 @@ function Signup() {
       });
   };
   return (
-    <Stack
-      sx={{ height: "100vh" }}
-      justifyContent={"center"}
-      alignItems={"center"}
-      className="background"
-    >
-      <Paper elevation={4}>
-        <Stack
-          component={"form"}
-          direction={"column"}
-          spacing={2}
-          sx={{
-            p: 2,
-            width: "300px",
-            borderRadius: 1,
-          }}
-          onSubmit={handleOnSubmit}
-        >
-          {inputfield.map((input) => (
-            <CustomInput
-              {...input}
+    <UserLayout>
+      <Stack
+        padding={"40px"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        className="background"
+      >
+        <Paper elevation={4}>
+          <Stack
+            component={"form"}
+            direction={"column"}
+            spacing={2}
+            sx={{
+              p: 2,
+              width: "300px",
+              borderRadius: 1,
+            }}
+            onSubmit={handleOnSubmit}
+          >
+            {inputfield.map((input) => (
+              <CustomInput
+                {...input}
+                onChange={(e) =>
+                  setForm({ ...form, [e.target.name]: e.target.value })
+                }
+              />
+            ))}
+            <TextField
               onChange={(e) =>
                 setForm({ ...form, [e.target.name]: e.target.value })
               }
+              onBlur={handleOnFocus}
+              id="confirmpassword"
+              name="confirmpassword"
+              label="Confirm Password"
+              type="password"
+              variant="standard"
+              helperText={helptext}
             />
-          ))}
-          <TextField
-            onChange={(e) =>
-              setForm({ ...form, [e.target.name]: e.target.value })
-            }
-            onBlur={handleOnFocus}
-            id="confirmpassword"
-            name="confirmpassword"
-            label="Confirm Password"
-            type="password"
-            variant="standard"
-            helperText={helptext}
-          />
-          <Button color="secondary" variant="contained" type="submit">
-            SignUp
-          </Button>
-        </Stack>
-      </Paper>
-    </Stack>
+            <Button color="secondary" variant="contained" type="submit">
+              SignUp
+            </Button>
+          </Stack>
+        </Paper>
+      </Stack>
+    </UserLayout>
   );
 }
 

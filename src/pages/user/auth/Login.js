@@ -10,6 +10,7 @@ import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { getUserAction } from "../../../redux_firebase/user/userAction";
 import { getUserOrderListAction } from "../../../redux_firebase/order/orderAction";
+import UserLayout from "../../../components/layout/UserLayout";
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,57 +59,53 @@ function Login() {
       });
   };
   return (
-    <div className="background">
-      <Stack
-        sx={{
-          height: "100vh",
-        }}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <Paper elevation={4}>
-          <Stack
-            component={"form"}
-            onSubmit={handleOnSubmit}
-            sx={{
-              width: "300px",
-              p: 2,
-              borderRadius: 1,
-            }}
-            spacing={2}
-            direction={"column"}
-          >
-            {inputfield.map((input, i) => (
-              <CustomInput
-                {...input}
-                key={i}
-                onChange={(e) =>
-                  setForm({ ...form, [e.target.name]: e.target.value })
-                }
-              />
-            ))}
-
-            <IconButton
-              type="submit"
-              size="large"
-              variant="outlined"
-              color="secondary"
+    <UserLayout>
+      <div className="background">
+        <Stack height={"76vh"} justifyContent={"center"} alignItems={"center"}>
+          <Paper elevation={4}>
+            <Stack
+              component={"form"}
+              onSubmit={handleOnSubmit}
+              sx={{
+                width: "300px",
+                p: 2,
+                borderRadius: 1,
+              }}
+              spacing={2}
+              direction={"column"}
             >
-              <LoginIcon />
-            </IconButton>
-          </Stack>
-        </Paper>
-        <Box>
-          <Link className="link" to="/signup">
-            Don't have an account, Signup Now
-          </Link>
+              {inputfield.map((input, i) => (
+                <CustomInput
+                  {...input}
+                  key={i}
+                  onChange={(e) =>
+                    setForm({ ...form, [e.target.name]: e.target.value })
+                  }
+                />
+              ))}
 
-          <Link className="link" to="/admin-login">
-            Login as Admin
-          </Link>
-        </Box>
-      </Stack>
-    </div>
+              <IconButton
+                type="submit"
+                size="large"
+                variant="outlined"
+                color="secondary"
+              >
+                <LoginIcon />
+              </IconButton>
+            </Stack>
+          </Paper>
+          <Box>
+            <Link className="link" to="/signup">
+              Don't have an account, Signup Now
+            </Link>
+
+            <Link className="link" to="/admin-login">
+              Login as Admin
+            </Link>
+          </Box>
+        </Stack>
+      </div>
+    </UserLayout>
   );
 }
 
