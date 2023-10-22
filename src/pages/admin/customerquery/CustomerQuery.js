@@ -26,6 +26,7 @@ import CustomInput from "../../../components/custominput/CustomInput";
 function CustomerQuery() {
   const dispatch = useDispatch();
   const [note, setNote] = useState({});
+  const [displayList, setDisplayList] = useState([]);
   const { queryList } = useSelector((state) => state.query);
   console.log(queryList);
   const handleOnEdit = (query) => {
@@ -37,6 +38,9 @@ function CustomerQuery() {
   const handleOnDelete = (id) => {
     dispatch(deleteQuery(id));
   };
+  useEffect(() => {
+    setDisplayList(queryList);
+  }, [queryList]);
 
   return (
     <AdminLayout>
