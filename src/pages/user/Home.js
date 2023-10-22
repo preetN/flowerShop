@@ -1,7 +1,5 @@
 import React from "react";
-import Footer from "../../components/layout/Footer";
 import { useDispatch } from "react-redux";
-// import Carousel from "react-material-ui-carousel";
 import pic from "../../asset/images/hanging.png";
 import hanging2 from "../../asset/images/hanging2.png";
 import Products from "./Products";
@@ -15,11 +13,6 @@ function Home() {
 
   return (
     <div>
-      {/* <Carousel>
-        {bouquetlist.map((item) => (
-          <img src={item.img} alt="bouquet" width={"100%"} height={"300px"} />
-        ))}
-      </Carousel> */}
       <Box className="hero" component={"div"}>
         <Box
           display={{ xs: "none", sm: "flex" }}
@@ -58,7 +51,6 @@ function Home() {
         </Box>
       </Box>
       <Products />
-      <Footer />
     </div>
   );
 }

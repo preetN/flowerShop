@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
@@ -14,31 +14,22 @@ import {
   Paper,
   TableRow,
   TextField,
-  Button,
 } from "@mui/material";
 import {
   deleteQuery,
-  getAllQueryAction,
   updateQueryAction,
 } from "../../../redux_firebase/query/queryAction";
 function CustomerQuery() {
   const dispatch = useDispatch();
   const [note, setNote] = useState({});
-  const [displayList, setDisplayList] = useState([]);
   const { queryList } = useSelector((state) => state.query);
-  const handleOnEdit = (query) => {
+  const handleOnSave = (query) => {
     const { id, ...rest } = query;
     dispatch(updateQueryAction(id, rest));
-    console.log("Edit ", query);
-    dispatch(getAllQueryAction());
   };
   const handleOnDelete = (id) => {
     dispatch(deleteQuery(id));
   };
-  useEffect(() => {
-    setDisplayList(queryList);
-  }, [queryList]);
-  console.log(displayList);
 
   return (
     <AdminLayout>
@@ -55,55 +46,60 @@ function CustomerQuery() {
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {queryList.map((item) => (
-                <TableRow
-                  key={item.fname}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {item.lastname}
-                  </TableCell>
-                  <TableCell align="right">{item.firstname} </TableCell>
-                  <TableCell align="right">{item.email}</TableCell>
-                  <TableCell align="right">{item.message}</TableCell>
+            {queryList.length !== 0 ? (
+              <TableBody>
+                {queryList.map((item) => (
+                  <TableRow
+                    key={item.fname}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {item.lastname}
+                    </TableCell>
+                    <TableCell align="right">{item.firstname} </TableCell>
+                    <TableCell align="right">{item.email}</TableCell>
+                    <TableCell align="right">{item.message}</TableCell>
 
-                  <TableCell align="right">
-                    {item.note ? (
-                      item.note
-                    ) : (
-                      <>
-                        <TextField
-                          name={"note"}
-                          placeholder={"make a note"}
-                          onChange={(e) =>
-                            setNote({
-                              ...item,
-                              [e.target.name]: e.target.value,
-                            })
-                          }
-                        />
-                      </>
-                    )}
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      color="success"
-                      onClick={() => handleOnEdit(note)}
-                    >
-                      <SaveIcon />
-                    </IconButton>
-                    <IconButton
-                      color="error"
-                      onClick={() => handleOnDelete(item.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                    <Button>Edit note</Button>
+                    <TableCell align="right">
+                      <TextField
+                        name={"note"}
+                        placeholder={"make a note"}
+                        onChange={(e) =>
+                          setNote({
+                            ...item,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                      />
+                      {item.note && <p>{item.note}</p>}
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton
+                        color="success"
+                        onClick={() => handleOnSave(note)}
+                      >
+                        <SaveIcon />
+                      </IconButton>
+                      <IconButton
+                        color="error"
+                        onClick={() => handleOnDelete(item.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center" colSpan={6}>
+                    {" "}
+                    ------ No querries to show -----
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
+              </TableBody>
+            )}
           </Table>
         </TableContainer>
       </Box>

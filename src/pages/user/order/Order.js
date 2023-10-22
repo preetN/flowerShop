@@ -64,9 +64,11 @@ function Order() {
               component="nav"
               aria-labelledby="nested-order-list"
             >
-              {pendingList.map((item) => (
-                <CustomNestedList item={item} />
-              ))}
+              {pendingList.length === 0 ? (
+                <p>Nothing to show here</p>
+              ) : (
+                pendingList.map((item) => <CustomNestedList item={item} />)
+              )}
             </List>
           </TabPanel>
           <TabPanel value="tab-1">
@@ -75,12 +77,16 @@ function Order() {
               component="nav"
               aria-labelledby="nested-order-list"
             >
-              {approvedList.map((item) => (
-                <CustomNestedList
-                  item={item}
-                  handleOnCollect={handleOnCollect}
-                />
-              ))}
+              {approvedList.length === 0 ? (
+                <p>Nothing to show here</p>
+              ) : (
+                approvedList.map((item) => (
+                  <CustomNestedList
+                    item={item}
+                    handleOnCollect={handleOnCollect}
+                  />
+                ))
+              )}
             </List>
           </TabPanel>
           <TabPanel value="tab-2">
@@ -89,9 +95,11 @@ function Order() {
               component="nav"
               aria-labelledby="nested-order-list"
             >
-              {previousList.map((item) => (
-                <CustomNestedList item={item} />
-              ))}
+              {previousList.length === 0 ? (
+                <p>Nothing to show here</p>
+              ) : (
+                previousList.map((item) => <CustomNestedList item={item} />)
+              )}
             </List>
           </TabPanel>
         </TabContext>

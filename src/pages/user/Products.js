@@ -58,10 +58,6 @@ function Products() {
           flexWrap={"wrap"}
         >
           {displayList?.map((item, i) => (
-            // <Link
-            //   to={`/bouquetdetails/${item.id}`}
-            //   style={{ textDecoration: "none" }}
-            // >
             <CustomCard key={i} {...item} />
           ))}
         </Box>

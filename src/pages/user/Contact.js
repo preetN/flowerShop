@@ -3,6 +3,7 @@ import UserLayout from "../../components/layout/UserLayout";
 import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import CustomInput from "../../components/custominput/CustomInput";
 import { addQueryAction } from "../../redux_firebase/query/queryAction";
+import { useNavigate } from "react-router-dom";
 function Contact() {
   const [form, setForm] = useState({});
   const inputfield = [
@@ -36,10 +37,12 @@ function Contact() {
   const handleOnChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  const navigate = useNavigate();
   const handleOnSubmit = (e) => {
     e.preventDefault();
     console.log(form);
     addQueryAction(form);
+    navigate("/contact");
   };
   return (
     <UserLayout>

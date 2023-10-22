@@ -26,14 +26,17 @@ export default function CustomCard({
       <ReactCardFlip isFlipped={flip} flipDirection="vertical">
         <Box component={"a"} onClick={handleFlip}>
           <CardMedia sx={{ height: 190 }} image={img} title="bouquet" />
-          {/* <Button onClick={handleFlip}></Button> */}
         </Box>
         <Box sx={{ maxHeight: 190 }}>
           <CardContent>
             <Typography gutterBottom variant="h6" component="div">
               {bname}
             </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
+            <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              fontSize={"10px"}
+            >
               {description}
             </Typography>
             <Typography variant="body1" color="secondary">
