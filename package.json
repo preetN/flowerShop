@@ -1,7 +1,7 @@
 {
   "name": "flowershop",
   "version": "0.1.0",
-  "homepage": "https://preetn.github.io/flowerShop",
+  "homepage": "https://preetn.github.io/flowerShop/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
