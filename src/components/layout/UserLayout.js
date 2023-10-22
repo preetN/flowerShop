@@ -10,8 +10,9 @@ function UserLayout({ children }) {
       </div>
 
       <Box minHeight="72vh">{children}</Box>
-
-      <Footer />
+      <Box marginTop={"20px"}>
+        <Footer />
+      </Box>
     </>
   );
 }

@@ -9,7 +9,6 @@ function Footer() {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      marginTop={"20px"}
     >
       &copy; All Rights Reserved || Made By Me ❤️
     </Box>
