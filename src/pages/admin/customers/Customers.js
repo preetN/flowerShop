@@ -12,7 +12,6 @@ import {
   TableCell,
 } from "@mui/material";
 function Customers() {
-  console.log("customers");
   const { usersList } = useSelector((state) => state.user);
   console.log(usersList);
   return (

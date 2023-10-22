@@ -4,8 +4,11 @@ import { getAllUserAction } from "../../redux_firebase/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { getAllOrderAction } from "../../redux_firebase/order/orderAction";
+import { getAllQueryAction } from "../../redux_firebase/query/queryAction";
+
 function AdminDashboard() {
   const dispatch = useDispatch();
+  dispatch(getAllQueryAction());
   dispatch(getAllUserAction());
   dispatch(getAllOrderAction());
   const { bouquetlist } = useSelector((state) => state.bouquet);

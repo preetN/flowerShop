@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import UserLayout from "../../components/layout/UserLayout";
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useSelector } from "react-redux";
-import { Label } from "@mui/icons-material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import CustomInput from "../../components/custominput/CustomInput";
-
+import { addQueryAction } from "../../redux_firebase/query/queryAction";
 function Contact() {
   const [form, setForm] = useState({});
   const inputfield = [
@@ -47,7 +38,8 @@ function Contact() {
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    alert("hello");
+    console.log(form);
+    addQueryAction(form);
   };
   return (
     <UserLayout>

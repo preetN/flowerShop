@@ -26,6 +26,7 @@ import Order from "./pages/user/order/Order";
 import Products from "./pages/user/Products";
 import Profile from "./pages/user/Profile";
 import Contact from "./pages/user/Contact";
+import CustomerQuery from "./pages/admin/customerquery/CustomerQuery";
 
 function App() {
   const color_theme = createTheme({
@@ -107,7 +108,14 @@ function App() {
             </PrivateRoute>
           }
         />
-
+        <Route
+          path="/customerquery"
+          element={
+            <PrivateRoute>
+              <CustomerQuery />
+            </PrivateRoute>
+          }
+        />
         <Route path="/*" element={<p>Url unavailable</p>} />
       </Routes>
     </ThemeProvider>

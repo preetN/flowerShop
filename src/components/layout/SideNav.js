@@ -8,6 +8,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import MessageIcon from "@mui/icons-material/Message";
 function SideNav() {
   const pages = [
     {
@@ -29,6 +30,11 @@ function SideNav() {
       page: "Orders",
       icon: <ShoppingBasketIcon />,
       path: "/admin-orders",
+    },
+    {
+      page: "Queries",
+      icon: <MessageIcon />,
+      path: "/customerquery",
     },
     {
       page: "New Admin",
