@@ -12,7 +12,7 @@ import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import { useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/FireBase";
-import { getAdminAction } from "./redux_firebase/admin/adminAction";
+import { getUserAction } from "./redux_firebase/user/userAction";
 import Bouquet from "./pages/admin/bouquet/Bouquet";
 import { red, green } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material";
@@ -41,7 +41,7 @@ function App() {
   });
   const dispatch = useDispatch();
   onAuthStateChanged(auth, (user) => {
-    user?.uid && dispatch(getAdminAction(user.uid));
+    user?.uid && dispatch(getUserAction(user.uid));
   });
   useEffect(() => {
     dispatch(getAllBouquetAction());

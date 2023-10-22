@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserLayout from "../../components/layout/UserLayout";
 import { Box, ListItem, ListItemButton, List } from "@mui/material";
-import Card from "../../components/card/CustomCard";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CustomCard from "../../components/card/CustomCard";
 function Products() {

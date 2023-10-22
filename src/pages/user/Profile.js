@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import UserLayout from "../../components/layout/UserLayout";
 import { useSelector } from "react-redux";
 import {
   Avatar,
   Box,
-  Button,
-  Paper,
   Table,
   TableCell,
   TableRow,

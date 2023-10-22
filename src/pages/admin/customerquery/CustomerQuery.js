@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
@@ -14,21 +13,19 @@ import {
   TableHead,
   Paper,
   TableRow,
-  Button,
   TextField,
+  Button,
 } from "@mui/material";
 import {
   deleteQuery,
   getAllQueryAction,
   updateQueryAction,
 } from "../../../redux_firebase/query/queryAction";
-import CustomInput from "../../../components/custominput/CustomInput";
 function CustomerQuery() {
   const dispatch = useDispatch();
   const [note, setNote] = useState({});
   const [displayList, setDisplayList] = useState([]);
   const { queryList } = useSelector((state) => state.query);
-  console.log(queryList);
   const handleOnEdit = (query) => {
     const { id, ...rest } = query;
     dispatch(updateQueryAction(id, rest));
@@ -41,6 +38,7 @@ function CustomerQuery() {
   useEffect(() => {
     setDisplayList(queryList);
   }, [queryList]);
+  console.log(displayList);
 
   return (
     <AdminLayout>
@@ -101,6 +99,7 @@ function CustomerQuery() {
                     >
                       <DeleteIcon />
                     </IconButton>
+                    <Button>Edit note</Button>
                   </TableCell>
                 </TableRow>
               ))}
