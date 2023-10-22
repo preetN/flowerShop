@@ -116,7 +116,7 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/*" element={<p>Url unavailable</p>} />
+        <Route path="/*" element={<p>Url is unavailable</p>} />
       </Routes>
     </ThemeProvider>
   );
