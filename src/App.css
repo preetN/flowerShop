@@ -8,6 +8,7 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .background {
   background-repeat: no-repeat;
   background-image: url("./asset/images/background.avif");

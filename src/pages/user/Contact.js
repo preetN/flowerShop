@@ -65,10 +65,10 @@ function Contact() {
       <Container>
         <Stack
           sx={{ flexDirection: { xs: "column", md: "row" } }}
+          minHeight={"80vh"}
           gap={"10px"}
           justifyContent={"space-evenly"}
           alignItems={"center"}
-          marginTop={"40px"}
         >
           <Box>
             <Typography variant="h2">Contact Us</Typography>
