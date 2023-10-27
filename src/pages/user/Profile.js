@@ -6,30 +6,31 @@ import {
   Box,
   Button,
   Stack,
-  Container,
   Table,
   TableCell,
   TableRow,
   Typography,
-  Paper,
+  TableBody,
 } from "@mui/material";
 import profileImg from "../../asset/images/dummy_profileimg.png";
 import CustomInput from "../../components/custominput/CustomInput";
-import { Label } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 function Profile() {
   const { user } = useSelector((state) => state.user);
   const [form, setForm] = useState(user);
+  const [edit, setEdit] = useState(false);
+  const navigate = useNavigate();
   const inputfield = [
     {
       id: "firstname",
-      name: "firstname",
+      name: "fname",
       label: "First Name",
       variant: "outlined",
       value: form.fname,
     },
     {
       id: "lastname",
-      name: "lastname",
+      name: "lname",
       label: "Last Name",
       variant: "outlined",
       value: form.lname,
@@ -42,24 +43,27 @@ function Profile() {
       value: form.email,
     },
     {
-      id: "email",
-      name: "email",
-      label: "Email",
+      id: "pno",
+      name: "pno",
+      label: "Phone number",
       variant: "outlined",
       value: form.pno,
     },
   ];
   const handleOnSave = () => {
     window.confirm("Are you sure you want to change details");
-  };
-  const handleOnChange = () => {
     setForm("");
+    setEdit(false);
+    navigate("/profile");
+  };
+  const handleOnEdit = () => {
+    setEdit(true);
   };
   return (
     <>
       <UserLayout>
         <Box height={"80vh"} bgcolor={"primary.main"}>
-          <Box height={"150px"} bgcolor={"grey"}></Box>
+          <Box height={"150px"} bgcolor={"secondary.main"}></Box>
           <Box
             display={"flex"}
             alignItems={"center"}
@@ -72,34 +76,69 @@ function Profile() {
             <Avatar
               alt="dummyprofileimage"
               src={profileImg}
-              sx={{ width: 200, height: 200, border: "10px solid grey" }}
+              sx={{
+                width: 200,
+                height: 200,
+                border: "10px solid secondary.main",
+              }}
             />
             <Box>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleOnSave}
-                sx={{ margin: "20px" }}
-              >
-                Save Changes
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleOnChange}
-                sx={{
-                  margin: "20px",
-                  paddingLeft: "50px",
-                  paddingRight: "50px",
-                }}
-              >
-                Edit Profile
-              </Button>
-              <Stack gap={"10px"}>
-                {inputfield.map((input) => (
-                  <CustomInput color="secondary" {...input} />
-                ))}
-              </Stack>
+              {edit ? (
+                <Stack gap={"10px"} width={"300px"} margin={"20px"}>
+                  {inputfield.map((input) => (
+                    <CustomInput
+                      key={input.fname}
+                      color="secondary"
+                      {...input}
+                      onChange={(e) => console.log(e.target.value)}
+                    />
+                  ))}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleOnSave}
+                  >
+                    Save Changes
+                  </Button>
+                </Stack>
+              ) : (
+                <Stack
+                  flexDirection={"column"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleOnEdit}
+                    sx={{
+                      margin: "20px",
+                    }}
+                  >
+                    Edit Profile
+                  </Button>
+                  <Table sx={{ width: "70vw" }}>
+                    <TableBody>
+                      {inputfield.map((input) => (
+                        <>
+                          <TableRow>
+                            <TableCell align="center">
+                              <Typography variant="overline">
+                                {input.label}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">
+                              <Typography variant="body1">
+                                {input.value}
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                        </>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Stack>
+              )}
             </Box>
           </Box>
         </Box>
