@@ -18,16 +18,18 @@ export default function CustomCard({
   price,
 }) {
   const [flip, setFlip] = React.useState(false);
-  const handleFlip = () => {
-    setFlip(!flip);
-  };
+
   return (
-    <Card sx={{ width: 345 }}>
+    <Card
+      sx={{ width: 345 }}
+      onMouseOver={() => setFlip(true)}
+      onClick={() => setFlip(false)}
+    >
       <ReactCardFlip isFlipped={flip} flipDirection="vertical">
-        <Box component={"a"} onClick={handleFlip}>
+        <Box>
           <CardMedia sx={{ height: 190 }} image={img} title="bouquet" />
         </Box>
-        <Box sx={{ maxHeight: 190 }}>
+        <Box sx={{ height: 190 }}>
           <CardContent>
             <Typography gutterBottom variant="h6" component="div">
               {bname}
@@ -46,16 +48,15 @@ export default function CustomCard({
               Date Added: {date}
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions sx={{ float: "right" }}>
             <Link
               to={`/bouquetdetails/${id}`}
               style={{ textDecoration: "none" }}
             >
-              <Button variant="outlined" size="small" sx={{ left: "240px" }}>
+              <Button variant="contained" color="secondary" size="small">
                 More ...
               </Button>
             </Link>
-            <Button onClick={handleFlip}>Click to flip</Button>
           </CardActions>
         </Box>
       </ReactCardFlip>

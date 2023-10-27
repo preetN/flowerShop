@@ -9,10 +9,9 @@ function UserLayout({ children }) {
         <PublicHeader />
       </div>
 
-      <Box minHeight="72vh">{children}</Box>
-      <Box marginTop={"10px"}>
-        <Footer />
-      </Box>
+      <Box minHeight="80vh">{children}</Box>
+
+      <Footer />
     </>
   );
 }

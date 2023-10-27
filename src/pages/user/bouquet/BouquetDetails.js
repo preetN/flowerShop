@@ -44,12 +44,17 @@ function BouquetDetails() {
       }}
     >
       <div style={{ position: "fixed", top: 50, left: 50 }}>
-        <Link to="/">
+        <Link to="/products">
           <CloseIcon style={{ fontSize: 60 }} color="secondary" />
         </Link>
       </div>
 
-      <Box display="flex" gap="20px" alignItems={"center"}>
+      <Box
+        display="flex"
+        sx={{ flexDirection: { xs: "column", md: "row" } }}
+        gap="20px"
+        alignItems={"center"}
+      >
         <Box>
           <img
             src={selectedBouquet.img}
