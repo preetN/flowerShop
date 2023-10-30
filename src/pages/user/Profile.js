@@ -124,7 +124,7 @@ function Profile() {
                           <TableRow>
                             <TableCell align="center">
                               <Typography variant="overline">
-                                {input.label}
+                                {input.label}+" "
                               </Typography>
                             </TableCell>
                             <TableCell align="center">
