@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UserLayout from "../../components/layout/UserLayout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Avatar,
   Box,
@@ -15,21 +15,28 @@ import {
 import profileImg from "../../asset/images/dummy_profileimg.png";
 import CustomInput from "../../components/custominput/CustomInput";
 import { useNavigate } from "react-router-dom";
+import { updateUserAction } from "../../redux_firebase/user/userAction";
 function Profile() {
   const { user } = useSelector((state) => state.user);
-  const [form, setForm] = useState(user);
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({
+    fname: user.fname,
+    lname: user.lname,
+    email: user.email,
+    pno: user.pno,
+  });
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
   const inputfield = [
     {
-      id: "firstname",
+      id: "fname",
       name: "fname",
       label: "First Name",
       variant: "outlined",
       value: form.fname,
     },
     {
-      id: "lastname",
+      id: "lname",
       name: "lname",
       label: "Last Name",
       variant: "outlined",
@@ -52,18 +59,26 @@ function Profile() {
   ];
   const handleOnSave = () => {
     window.confirm("Are you sure you want to change details");
-    setForm("");
+    dispatch(updateUserAction(user.uid, form));
     setEdit(false);
     navigate("/profile");
   };
   const handleOnEdit = () => {
     setEdit(true);
   };
+  const handleOnChange = (e) => {
+    console.log("change");
+    setForm((prev) => {
+      let helper = { ...prev };
+      helper[`${e.target.id}`] = e.target.value;
+      return helper;
+    });
+  };
   return (
     <>
       <UserLayout>
-        <Box height={"80vh"} bgcolor={"primary.main"}>
-          <Box height={"150px"} bgcolor={"secondary.main"}></Box>
+        <Box minHeight={"80vh"} bgcolor={"primary.main"}>
+          <Box height={"150px"} bgcolor={"secondary.light"}></Box>
           <Box
             display={"flex"}
             alignItems={"center"}
@@ -90,7 +105,7 @@ function Profile() {
                       key={input.fname}
                       color="secondary"
                       {...input}
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={handleOnChange}
                     />
                   ))}
                   <Button
@@ -124,7 +139,7 @@ function Profile() {
                           <TableRow>
                             <TableCell align="center">
                               <Typography variant="overline">
-                                {input.label}+" "
+                                {input.label}
                               </Typography>
                             </TableCell>
                             <TableCell align="center">
