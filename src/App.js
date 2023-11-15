@@ -27,6 +27,7 @@ import Products from "./pages/user/Products";
 import Profile from "./pages/user/Profile";
 import Contact from "./pages/user/Contact";
 import CustomerQuery from "./pages/admin/customerquery/CustomerQuery";
+import Cart from "./pages/user/cart/Cart";
 
 function App() {
   const color_theme = createTheme({
@@ -58,7 +59,7 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/products" element={<Products />} />
         <Route path="/contact" element={<Contact />} />
-
+        <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route
           path="/admin-signup"

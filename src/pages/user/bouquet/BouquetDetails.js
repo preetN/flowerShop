@@ -1,38 +1,58 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
-import { addOrderAction } from "../../../redux_firebase/order/orderAction";
+import { addItemToCart } from "../../../redux_firebase/user/userAction";
+import QuantityPicker from "../../../components/qtyPicker/QuantityPicker";
 function BouquetDetails() {
+  const [exists, setExists] = useState(false);
+  const [qty, setQty] = useState(1);
   const { user } = useSelector((state) => state.user);
   const { id } = useParams();
-  const navigate = useNavigate();
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const [selectedBouquet, setSelectedBouquet] = useState({});
+  const { cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     const bouquet = bouquetlist.find((bouquet) => bouquet.id === id);
     setSelectedBouquet(bouquet);
-  }, [bouquetlist, id]);
-  console.log(selectedBouquet);
-  const handleOnOrder = ({ bname, price, img }) => {
-    const date = new Date();
-    const orderDate = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()}`;
-    const orderobj = {
-      userId: user.uid,
-      userEmail: user.email,
-      itemName: bname,
-      itemPrice: price,
-      itemImg: img,
-      orderDate: orderDate,
-      status: "pending",
-    };
-    console.log(orderobj);
-    addOrderAction(orderobj);
-    navigate("/order");
+    ifExists();
+  }, [bouquetlist, id, exists]);
+  const ifExists = () => {
+    const exist = cart.some((item) => item.itemId === id);
+    console.log(exist);
+    setExists(exist);
   };
+
+  const handleOnAddToCart = (orderobj) => {
+    // const date = new Date();
+    // const orderDate = `${date.getFullYear()}-${
+    //   date.getMonth() + 1
+    // }-${date.getDate()}`;
+    // const orderobj = {
+    //   userId: user.uid,
+    //   userEmail: user.email,
+    //   itemName: bname,
+    //   itemPrice: price,
+    //   itemImg: img,
+    //   orderDate: orderDate,
+    //   status: "pending",
+    // };
+    const cartItem = {
+      itemName: orderobj.bname,
+      itemId: orderobj.id,
+      itemPrice: orderobj.price,
+      itemImg: orderobj.img,
+      itemQty: qty,
+    };
+    console.log(cartItem, user.uid);
+    dispatch(addItemToCart(user.uid, cartItem));
+    setExists(true);
+    navigate("/products");
+  };
+
   return (
     <div
       style={{
@@ -68,17 +88,28 @@ function BouquetDetails() {
           <Typography variant="p">{selectedBouquet.description}</Typography>
           <Typography variant="h6">Price: ${selectedBouquet.price}</Typography>
           {user?.uid ? (
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => handleOnOrder(selectedBouquet)}
-            >
-              Click to Order
-            </Button>
+            !exists ? (
+              <>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => handleOnAddToCart(selectedBouquet)}
+                >
+                  Add To Cart
+                </Button>
+                <QuantityPicker qty={qty} setQty={setQty} />
+              </>
+            ) : (
+              <Link to="/cart">
+                <Button color="secondary" variant="outlined">
+                  Go ToCart
+                </Button>
+              </Link>
+            )
           ) : (
             <Link style={{ textDecoration: "none" }} to="/login">
               <Button color="secondary" variant="outlined">
-                SignIn to Order
+                SignIn to Add
               </Button>
             </Link>
           )}

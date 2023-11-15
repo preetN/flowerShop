@@ -75,6 +75,9 @@ function PublicHeader() {
                   <Link to="/order">
                     <Button color="secondary">Orders</Button>
                   </Link>
+                  <Link to="/cart">
+                    <Button color="secondary">Cart</Button>
+                  </Link>
                   <Button onClick={handleOnSignout} color="secondary">
                     SignOut
                   </Button>
@@ -147,6 +150,11 @@ function PublicHeader() {
                   <MenuItem key={"order"}>
                     <Link to="/order">
                       <Button>Orders</Button>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem key="cart">
+                    <Link to="/cart">
+                      <Button>Cart</Button>
                     </Link>
                   </MenuItem>
                   <MenuItem key="signout">
