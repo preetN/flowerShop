@@ -14,9 +14,10 @@ export const cartSlice = createSlice({
     },
     addToCart: (state, action) => {
       const item = action.payload.itemName;
-      const exist = state.cartItem.some((a) => a.itemName === item);
-
-      if (exist) {
+      const exist = state.cartItem.map((a) => a.itemName).indexOf(item);
+      console.log(exist);
+      if (exist >= 0) {
+        state.cartItem[exist].itemQty += 1;
       } else {
         state.cartItem.push({ ...action.payload });
       }

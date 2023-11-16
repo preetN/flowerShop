@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import UserLayout from "../../../components/layout/UserLayout";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCartAction,
-  updateItemQuantity,
-} from "../../../redux_firebase/cart/cartAction";
+
 import {
   TableContainer,
   Paper,
@@ -22,12 +19,10 @@ import { removeFromCart } from "../../../redux_firebase/cart/cartSlice";
 
 function Cart() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
   const { cartItem } = useSelector((state) => state.cart);
-  const total = 0;
-  // const total = cartItem
-  //   .map((item) => item.itemPrice * item.itemQty)
-  //   .reduce((sum, i) => sum + i, 0);
+  const total = cartItem
+    .map((item) => item.itemPrice * item.itemQty)
+    .reduce((sum, i) => sum + i, 0);
 
   const handleOnRemove = (index) => {
     dispatch(removeFromCart(index));

@@ -1,17 +1,11 @@
-import { Box, Typography, Button, TextField } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
-import { addItemToCart } from "../../../redux_firebase/user/userAction";
 import QuantityPicker from "../../../components/qtyPicker/QuantityPicker";
-import {
-  setCart,
-  addToCart,
-  emptyCart,
-} from "../../../redux_firebase/cart/cartSlice";
+import { addToCart } from "../../../redux_firebase/cart/cartSlice";
 function BouquetDetails() {
-  const [exists, setExists] = useState(false);
   const [qty, setQty] = useState(1);
   const { user } = useSelector((state) => state.user);
   const { id } = useParams();
@@ -22,14 +16,7 @@ function BouquetDetails() {
   useEffect(() => {
     const bouquet = bouquetlist.find((bouquet) => bouquet.id === id);
     setSelectedBouquet(bouquet);
-    // ifExists();
   }, [bouquetlist, id]);
-  // const ifExists = () => {
-  //   const exist = cart.some((item) => item.itemId === id);
-
-  //   console.log(exist);
-  //   setExists(exist);
-  // };
 
   const handleOnAddToCart = (orderobj) => {
     // const date = new Date();
@@ -55,8 +42,6 @@ function BouquetDetails() {
     console.log(cartItem, user.uid);
     dispatch(addToCart(cartItem));
     console.log("checkRedux");
-    dispatch(addItemToCart(user.uid, cartItem));
-    setExists(true);
     navigate("/products");
   };
 
@@ -95,24 +80,16 @@ function BouquetDetails() {
           <Typography variant="p">{selectedBouquet.description}</Typography>
           <Typography variant="h6">Price: ${selectedBouquet.price}</Typography>
           {user?.uid ? (
-            !exists ? (
-              <>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => handleOnAddToCart(selectedBouquet)}
-                >
-                  Add To Cart
-                </Button>
-                <QuantityPicker qty={qty} setQty={setQty} />
-              </>
-            ) : (
-              <Link to="/cart">
-                <Button color="secondary" variant="outlined">
-                  Go ToCart
-                </Button>
-              </Link>
-            )
+            <>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => handleOnAddToCart(selectedBouquet)}
+              >
+                Add To Cart
+              </Button>
+              <QuantityPicker qty={qty} setQty={setQty} />
+            </>
           ) : (
             <Link style={{ textDecoration: "none" }} to="/login">
               <Button color="secondary" variant="outlined">
