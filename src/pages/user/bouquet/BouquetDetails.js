@@ -5,6 +5,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { addItemToCart } from "../../../redux_firebase/user/userAction";
 import QuantityPicker from "../../../components/qtyPicker/QuantityPicker";
+import {
+  setCart,
+  addToCart,
+  emptyCart,
+} from "../../../redux_firebase/cart/cartSlice";
 function BouquetDetails() {
   const [exists, setExists] = useState(false);
   const [qty, setQty] = useState(1);
@@ -12,19 +17,19 @@ function BouquetDetails() {
   const { id } = useParams();
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const [selectedBouquet, setSelectedBouquet] = useState({});
-  const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     const bouquet = bouquetlist.find((bouquet) => bouquet.id === id);
     setSelectedBouquet(bouquet);
-    ifExists();
-  }, [bouquetlist, id, exists]);
-  const ifExists = () => {
-    const exist = cart.some((item) => item.itemId === id);
-    console.log(exist);
-    setExists(exist);
-  };
+    // ifExists();
+  }, [bouquetlist, id]);
+  // const ifExists = () => {
+  //   const exist = cart.some((item) => item.itemId === id);
+
+  //   console.log(exist);
+  //   setExists(exist);
+  // };
 
   const handleOnAddToCart = (orderobj) => {
     // const date = new Date();
@@ -48,6 +53,8 @@ function BouquetDetails() {
       itemQty: qty,
     };
     console.log(cartItem, user.uid);
+    dispatch(addToCart(cartItem));
+    console.log("checkRedux");
     dispatch(addItemToCart(user.uid, cartItem));
     setExists(true);
     navigate("/products");

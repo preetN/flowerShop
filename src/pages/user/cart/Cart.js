@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import UserLayout from "../../../components/layout/UserLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartAction } from "../../../redux_firebase/cart/cartAction";
+import {
+  getCartAction,
+  updateItemQuantity,
+} from "../../../redux_firebase/cart/cartAction";
 import {
   TableContainer,
   Paper,
@@ -13,19 +16,22 @@ import {
   Typography,
   Box,
   Container,
+  Button,
 } from "@mui/material";
+import { removeFromCart } from "../../../redux_firebase/cart/cartSlice";
 
 function Cart() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { cart } = useSelector((state) => state.cart);
-  useEffect(() => {
-    dispatch(getCartAction(user.uid));
-  }, []);
-  console.log(cart);
-  const total = cart
-    .map((item) => item.itemPrice * item.itemQty)
-    .reduce((sum, i) => sum + i, 0);
+  const { cartItem } = useSelector((state) => state.cart);
+  const total = 0;
+  // const total = cartItem
+  //   .map((item) => item.itemPrice * item.itemQty)
+  //   .reduce((sum, i) => sum + i, 0);
+
+  const handleOnRemove = (index) => {
+    dispatch(removeFromCart(index));
+  };
   return (
     <UserLayout>
       <Container>
@@ -39,7 +45,9 @@ function Cart() {
             <Typography variant="body2">Continue Shopping</Typography>
           </Box>
 
-          <Typography marginTop={"20px"}> Total Items={cart.length}</Typography>
+          <Typography marginTop={"20px"}>
+            Total Items={cartItem.length}
+          </Typography>
         </Box>
 
         <Box display={"flex"} justifyContent={"center"} margin={"50px"}>
@@ -54,11 +62,15 @@ function Cart() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cart.map((item) => (
+                {cartItem?.map((item, i) => (
                   <TableRow>
                     <TableCell>{item.itemName}</TableCell>
                     <TableCell align="right">{item.itemPrice}</TableCell>
-                    <TableCell align="right">{item.itemQty}</TableCell>
+
+                    <TableCell align="right">
+                      {item.itemQty}{" "}
+                      <Button onClick={() => handleOnRemove(i)}>Remove</Button>
+                    </TableCell>
                     <TableCell align="right">
                       {item.itemPrice * item.itemQty}
                     </TableCell>
