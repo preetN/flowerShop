@@ -1,12 +1,21 @@
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
-import { Box, Button, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ListItem,
+  Table,
+  TableCell,
+  TableHead,
+  Typography,
+  TableRow,
+  TableBody,
+} from "@mui/material";
 
 export default function CustomNestedList({ item, handleOnCollect }) {
   const [open, setOpen] = useState(false);
@@ -17,9 +26,6 @@ export default function CustomNestedList({ item, handleOnCollect }) {
   return (
     <>
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <img src={item.itemImg} width="40px" alt="bouquet" />
-        </ListItemIcon>
         <ListItemText>Order Id: {item.id}</ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
@@ -33,14 +39,33 @@ export default function CustomNestedList({ item, handleOnCollect }) {
             </ListItemText>
           )}
           <ListItemText>
-            <Box
-              component="div"
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Typography variant="h4">{item.itemName}</Typography>
-              <img src={item.itemImg} width="200px" alt="bouquet" />
-              <Typography variant="p">$AU {item.itemPrice}</Typography>
-            </Box>
+            <Typography variant="h6">Order Details:</Typography>
+
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Item Name</TableCell>
+                  <TableCell>Image</TableCell>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>Total</TableCell>
+                </TableRow>
+              </TableHead>
+              {item.orderDetails.map((i) => (
+                <TableBody>
+                  <TableCell>
+                    <Typography variant="h5">{i.itemName}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <img src={i.itemImg} width="200px" alt="bouquet" />
+                  </TableCell>
+                  <TableCell> $AU {i.itemPrice}</TableCell>
+                  <TableCell>{i.itemQty}</TableCell>
+                  <TableCell> $AU {i.itemPrice * i.itemQty}</TableCell>
+                </TableBody>
+              ))}
+            </Table>
+
             <Box component={"div"}>
               <Typography variant="h6">Order Information:</Typography>
               <List>

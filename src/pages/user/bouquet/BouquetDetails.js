@@ -18,25 +18,12 @@ function BouquetDetails() {
     setSelectedBouquet(bouquet);
   }, [bouquetlist, id]);
 
-  const handleOnAddToCart = (orderobj) => {
-    // const date = new Date();
-    // const orderDate = `${date.getFullYear()}-${
-    //   date.getMonth() + 1
-    // }-${date.getDate()}`;
-    // const orderobj = {
-    //   userId: user.uid,
-    //   userEmail: user.email,
-    //   itemName: bname,
-    //   itemPrice: price,
-    //   itemImg: img,
-    //   orderDate: orderDate,
-    //   status: "pending",
-    // };
+  const handleOnAddToCart = (cartobj) => {
     const cartItem = {
-      itemName: orderobj.bname,
-      itemId: orderobj.id,
-      itemPrice: orderobj.price,
-      itemImg: orderobj.img,
+      itemName: cartobj.bname,
+      itemId: cartobj.id,
+      itemPrice: cartobj.price,
+      itemImg: cartobj.img,
       itemQty: qty,
     };
     console.log(cartItem, user.uid);
