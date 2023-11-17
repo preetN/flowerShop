@@ -40,12 +40,7 @@ function Login() {
     signInWithEmailAndPassword(auth, form.email, form.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        Store.addNotification({
-          ...notification,
-          title: "LogIn successful",
-          message: "Welcome " + user.email,
-          type: "success",
-        });
+
         dispatch(getUserAction(user.uid));
       })
       .catch((error) => {

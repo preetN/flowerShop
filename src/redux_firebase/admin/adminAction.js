@@ -1,13 +1,21 @@
 import { db } from "../../config/FireBase";
 import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 import { setAdmin, setAdminList } from "./adminSlice";
+
+import { Store } from "react-notifications-component";
+import { notification } from "../../components/notification/Notify";
 export const getAdminAction = (uid) => async (dispatch) => {
   const docRef = doc(db, "admin", uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     dispatch(setAdmin({ uid, ...docSnap.data() }));
   } else {
-    console.log("No such document");
+    Store.addNotification({
+      ...notification,
+      title: "LogIn unsuccessful",
+      message: "Failed ",
+      type: "danger",
+    });
   }
 };
 export const getAllAdminAction = () => async (dispatch) => {

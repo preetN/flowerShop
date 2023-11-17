@@ -15,7 +15,7 @@ function AdminLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { admin } = useSelector((state) => state.admin);
-  console.log("admin uid ", admin.uid);
+
   useEffect(() => {
     admin?.uid && navigate("/admin-dashboard");
   }, [admin, navigate]);
@@ -39,12 +39,7 @@ function AdminLogin() {
     signInWithEmailAndPassword(auth, form.email, form.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        Store.addNotification({
-          ...notification,
-          title: "LogIn successful",
-          message: "Welcome " + user.email,
-          type: "success",
-        });
+
         dispatch(getAdminAction(user.uid));
       })
       .catch((error) => {

@@ -1,7 +1,6 @@
 import { db } from "../../config/FireBase";
 import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { setUser, setUsersList } from "./userSlice";
-
 import { Store } from "react-notifications-component";
 import { notification } from "../../components/notification/Notify";
 export const getUserAction = (uid) => async (dispatch) => {
@@ -9,8 +8,19 @@ export const getUserAction = (uid) => async (dispatch) => {
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     dispatch(setUser({ uid, ...docSnap.data() }));
+    Store.addNotification({
+      ...notification,
+      title: "LogIn successful",
+      message: "Welcome ",
+      type: "success",
+    });
   } else {
-    console.log("No such document");
+    Store.addNotification({
+      ...notification,
+      title: "LogIn unsuccessful",
+      message: "Failed ",
+      type: "danger",
+    });
   }
 };
 export const getAllUserAction = () => async (dispatch) => {
