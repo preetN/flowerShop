@@ -15,11 +15,13 @@ import {
   approveOrderAction,
   getAllOrderAction,
 } from "../../../redux_firebase/order/orderAction";
+import SimpleNestedList from "../../../components/simpleNestedList/SimpleNestedList";
 
 function OrderTable() {
   const dispatch = useDispatch();
   const [displayList, setDisplayList] = useState([]);
   const { orderList } = useSelector((state) => state.order);
+
   useEffect(() => {
     setDisplayList(orderList);
   }, [orderList]);
@@ -38,9 +40,8 @@ function OrderTable() {
               <TableCell align="center">Order Date</TableCell>
               <TableCell align="center">CustomerId</TableCell>
               <TableCell align="center">Customer Email</TableCell>
-              <TableCell align="center">Order Ref Image</TableCell>
-              <TableCell align="center">Item Name</TableCell>
-              <TableCell align="center">Item Price</TableCell>
+              <TableCell align="center">Order Details</TableCell>
+              <TableCell align="center">Order Total</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
@@ -60,15 +61,12 @@ function OrderTable() {
                 <TableCell component="th" scope="row">
                   {item.userEmail}
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  <img src={item.itemImg} width="200px" alt="bouquet" />
+                <TableCell>
+                  {item.orderDetails.map((i) => (
+                    <SimpleNestedList i={i} />
+                  ))}
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  {item.itemName}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {item.itemPrice}
-                </TableCell>
+                <TableCell>{item.orderTotal}</TableCell>
                 <TableCell component="th" scope="row">
                   {item.status}
                 </TableCell>

@@ -23,7 +23,12 @@ export const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      state.cartItem.splice(action.payload, 1);
+      const quantity = state.cartItem[action.payload].itemQty;
+      if (quantity === 1) {
+        state.cartItem.splice(action.payload, 1);
+      } else {
+        state.cartItem[action.payload].itemQty -= 1;
+      }
     },
     emptyCart: (state) => {
       state.cartItem = [];

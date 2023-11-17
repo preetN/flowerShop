@@ -23,7 +23,7 @@ import {
   emptyCart,
   removeFromCart,
 } from "../../../redux_firebase/cart/cartSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addOrderAction } from "../../../redux_firebase/order/orderAction";
 
 function Cart() {
@@ -37,8 +37,6 @@ function Cart() {
     .reduce((sum, i) => sum + i, 0);
 
   const handleOnRemove = (index) => {
-    //remove quantity till it becomes 1 and then remove item
-    //update ordertable on admin side as well
     dispatch(removeFromCart(index));
   };
   const handleOnOrder = () => {
@@ -73,7 +71,9 @@ function Cart() {
             alignItems={"center"}
           >
             <Typography variant="h2">Your Shopping Cart</Typography>
-            <Typography variant="body2">Continue Shopping</Typography>
+            <Link to="/products">
+              <Typography variant="body2">Continue Shopping</Typography>
+            </Link>
           </Box>
 
           <Typography marginTop={"20px"}>
