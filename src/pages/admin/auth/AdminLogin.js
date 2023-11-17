@@ -39,7 +39,6 @@ function AdminLogin() {
     signInWithEmailAndPassword(auth, form.email, form.password)
       .then((userCredential) => {
         const user = userCredential.user;
-
         dispatch(getAdminAction(user.uid));
       })
       .catch((error) => {

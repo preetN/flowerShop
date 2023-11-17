@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Store } from "react-notifications-component";
+import { notification } from "../../components/notification/Notify";
 
 const initialState = {
   cart: [],
@@ -20,6 +22,12 @@ export const cartSlice = createSlice({
         state.cartItem[exist].itemQty += 1;
       } else {
         state.cartItem.push({ ...action.payload });
+        Store.addNotification({
+          ...notification,
+          title: "Added",
+          message: "Added to Cart",
+          type: "success",
+        });
       }
     },
     removeFromCart: (state, action) => {
