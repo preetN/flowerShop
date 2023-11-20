@@ -30,6 +30,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { addOrderAction } from "../../../redux_firebase/order/orderAction";
 import Checkbox from "@mui/material/Checkbox";
+import SimpleNestedList from "../../../components/simpleNestedList/SimpleNestedList";
 
 function Cart() {
   const navigate = useNavigate();
@@ -80,23 +81,20 @@ function Cart() {
             alignItems={"center"}
           >
             <Typography variant="h2">Your Shopping Cart</Typography>
-            <Link to="/products">
-              <Typography variant="body2">Continue Shopping</Typography>
-            </Link>
-          </Box>
-          <Box
-            display={"flex"}
-            justifyContent={"flex-end"}
-            alignItems={"center"}
-          >
-            <Typography marginTop={"20px"}>
-              Total Items={cartItem.length}
-            </Typography>
-            <Tooltip title="Empty Cart">
-              <Button color="secondary" onClick={() => dispatch(emptyCart())}>
-                <DeleteIcon />
-              </Button>
-            </Tooltip>
+            <Box
+              display={"flex"}
+              justifyContent={"flex-end"}
+              alignItems={"center"}
+            >
+              <Link to="/products">
+                <Typography variant="body2">Continue Shopping</Typography>
+              </Link>
+              <Tooltip title="Empty Cart">
+                <Button color="secondary" onClick={() => dispatch(emptyCart())}>
+                  <DeleteIcon />
+                </Button>
+              </Tooltip>
+            </Box>
           </Box>
         </Box>
 
@@ -143,9 +141,18 @@ function Cart() {
           </TableContainer>
         </Box>
         {cartItem.length > 0 && (
-          <Button color="secondary" onClick={handleOnOrder} variant="contained">
-            Ready To Order
-          </Button>
+          <Box display={"flex"} justifyContent={"flex-end"}>
+            <Button
+              sx={{
+                margin: "0 20px 20px 0",
+              }}
+              color="secondary"
+              onClick={handleOnOrder}
+              variant="contained"
+            >
+              Ready To Order
+            </Button>
+          </Box>
         )}
         {order && cartItem.length > 0 && (
           <>
@@ -159,11 +166,13 @@ function Cart() {
                 <AccordionDetails>
                   <FormGroup>
                     <FormControlLabel
+                      disabled
                       control={<Checkbox defaultChecked />}
                       label="Pickup at Shop front"
                     />
                     <FormControlLabel
-                      control={<Checkbox disabled />}
+                      disabled
+                      control={<Checkbox />}
                       label="Delivery"
                     />
                   </FormGroup>
@@ -177,23 +186,30 @@ function Cart() {
                 </AccordionSummary>
                 <AccordionDetails>
                   {cartItem.map((item) => (
-                    <>
-                      <Typography>{item.itemName}</Typography>
-                      <Typography>{item.itemPrice}</Typography>
-                      <Typography>{item.itemQty}</Typography>
-                    </>
+                    <SimpleNestedList i={item} />
                   ))}
+                  <Typography
+                    sx={{ float: "right" }}
+                    variant="button"
+                    marginBottom={"20px"}
+                  >
+                    Order Total: ${total}
+                  </Typography>
                 </AccordionDetails>
               </Accordion>
             </Box>
-            <Button
-              sx={{ marginTop: "10px" }}
-              variant="contained"
-              color="secondary"
-              onClick={handleOnConfirmOrder}
-            >
-              Confirm Order
-            </Button>
+            <Box display={"flex"} justifyContent={"flex-end"}>
+              <Button
+                sx={{
+                  margin: "0 20px 20px 0",
+                }}
+                variant="contained"
+                color="secondary"
+                onClick={handleOnConfirmOrder}
+              >
+                Place Order
+              </Button>
+            </Box>
           </>
         )}
       </Container>

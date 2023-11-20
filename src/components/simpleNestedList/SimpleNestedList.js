@@ -1,9 +1,11 @@
 import {
+  Badge,
   Collapse,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
@@ -17,15 +19,22 @@ function SimpleNestedList({ i }) {
   return (
     <List>
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <img src={i.itemImg} width="40px" alt="bouquet" />
-        </ListItemIcon>
-        <ListItemText>{i.itemName}</ListItemText>
+        <Badge badgeContent={i.itemQty} color="error">
+          <ListItemIcon>
+            <img src={i.itemImg} width="40px" alt="bouquet" />
+          </ListItemIcon>
+        </Badge>
+        <ListItemText>
+          <Typography fontSize={"smaller"}>{i.itemName}</Typography>
+        </ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemText>Price: ${i.itemPrice}</ListItemText>
+          <ListItemIcon>
+            <img src={i.itemImg} width="100px" alt="bouquet" />
+          </ListItemIcon>
+          <ListItemText> Unit Price: ${i.itemPrice}</ListItemText>
           <ListItemText>Quantity: {i.itemQty}</ListItemText>
         </List>
       </Collapse>
