@@ -48,6 +48,7 @@ function Profile() {
       label: "Email",
       variant: "outlined",
       value: form.email,
+      disabled: "disabled",
     },
     {
       id: "pno",
@@ -77,8 +78,8 @@ function Profile() {
   return (
     <>
       <UserLayout>
-        <Box minHeight={"80vh"} bgcolor={"primary.main"}>
-          <Box height={"150px"} bgcolor={"secondary.light"}></Box>
+        <Box minHeight={"90vh"}>
+          <Box height={"150px"} bgcolor="text.secondary"></Box>
           <Box
             display={"flex"}
             alignItems={"center"}

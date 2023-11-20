@@ -1,15 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
 
-function QuantityPicker({ qty, setQty }) {
-  const Increment = (a) => {
-    a++;
-    setQty(a);
-  };
-  const Decrement = (a) => {
-    a--;
-    setQty(a);
-  };
+function QuantityPicker({ qty, setQty, Increment, Decrement }) {
   return (
     <Box>
       <Box>

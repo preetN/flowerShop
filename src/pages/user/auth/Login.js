@@ -15,7 +15,6 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-  console.log("user uid ", user.uid);
   useEffect(() => {
     user?.uid && navigate("/");
   }, [user, navigate]);
@@ -40,8 +39,13 @@ function Login() {
     signInWithEmailAndPassword(auth, form.email, form.password)
       .then((userCredential) => {
         const user = userCredential.user;
-
         dispatch(getUserAction(user.uid));
+        Store.addNotification({
+          ...notification,
+          title: "Success",
+          message: "Login Successful",
+          type: "success",
+        });
       })
       .catch((error) => {
         const errorMessage = error.message;

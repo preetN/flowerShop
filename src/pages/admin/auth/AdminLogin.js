@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import { IconButton, Stack, Paper } from "@mui/material";
 import { auth } from "../../../config/FireBase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminAction } from "../../../redux_firebase/admin/adminAction";
 import { Store } from "react-notifications-component";
@@ -39,7 +39,13 @@ function AdminLogin() {
     signInWithEmailAndPassword(auth, form.email, form.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        dispatch(getAdminAction(user.uid));
+        const a = dispatch(getAdminAction(user.uid));
+        Store.addNotification({
+          ...notification,
+          title: "Success",
+          message: "Admin Login Successful",
+          type: "success",
+        });
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -96,6 +102,9 @@ function AdminLogin() {
             </IconButton>
           </Stack>
         </Paper>
+        <Link className="link" to="/login">
+          Login as User
+        </Link>
       </Stack>
     </div>
   );

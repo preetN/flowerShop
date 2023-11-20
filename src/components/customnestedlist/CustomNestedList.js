@@ -26,7 +26,11 @@ export default function CustomNestedList({ item, handleOnCollect }) {
   return (
     <>
       <ListItemButton onClick={handleClick}>
-        <ListItemText>Order Id: {item.id}</ListItemText>
+        <ListItemText>
+          <Typography variant="button" color={"secondary.light"}>
+            Order Id: {item.id}
+          </Typography>
+        </ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -72,6 +76,11 @@ export default function CustomNestedList({ item, handleOnCollect }) {
                 <ListItem>
                   <Typography variant="overline">
                     Order Date:{item.orderDate}
+                  </Typography>
+                </ListItem>
+                <ListItem>
+                  <Typography variant="overline">
+                    Order Total: ${item.orderTotal}
                   </Typography>
                 </ListItem>
                 <ListItem>

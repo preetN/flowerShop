@@ -8,19 +8,8 @@ export const getUserAction = (uid) => async (dispatch) => {
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     dispatch(setUser({ uid, ...docSnap.data() }));
-    Store.addNotification({
-      ...notification,
-      title: "LogIn successful",
-      message: "Welcome ",
-      type: "success",
-    });
   } else {
-    Store.addNotification({
-      ...notification,
-      title: "LogIn unsuccessful",
-      message: "Failed ",
-      type: "danger",
-    });
+    console.log("error user");
   }
 };
 export const getAllUserAction = () => async (dispatch) => {

@@ -5,6 +5,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import QuantityPicker from "../../../components/qtyPicker/QuantityPicker";
 import { addToCart } from "../../../redux_firebase/cart/cartSlice";
+import { Store } from "react-notifications-component";
+import { notification } from "../../../components/notification/Notify";
 function BouquetDetails() {
   const [qty, setQty] = useState(1);
   const { user } = useSelector((state) => state.user);
@@ -17,7 +19,14 @@ function BouquetDetails() {
     const bouquet = bouquetlist.find((bouquet) => bouquet.id === id);
     setSelectedBouquet(bouquet);
   }, [bouquetlist, id]);
-
+  const Increment = (a) => {
+    a++;
+    setQty(a);
+  };
+  const Decrement = (a) => {
+    a--;
+    setQty(a);
+  };
   const handleOnAddToCart = (cartobj) => {
     const cartItem = {
       itemName: cartobj.bname,
@@ -26,10 +35,23 @@ function BouquetDetails() {
       itemImg: cartobj.img,
       itemQty: qty,
     };
-    console.log(cartItem, user.uid);
-    dispatch(addToCart(cartItem));
-    console.log("checkRedux");
-    navigate("/products");
+    if (qty > 0) {
+      dispatch(addToCart(cartItem));
+      Store.addNotification({
+        ...notification,
+        title: "Added",
+        message: "Added to Cart",
+        type: "success",
+      });
+      navigate(-1);
+    } else {
+      Store.addNotification({
+        ...notification,
+        type: "warning",
+        message: "can't add 0 items to cart",
+        title: "Try again",
+      });
+    }
   };
 
   return (
@@ -43,9 +65,9 @@ function BouquetDetails() {
       }}
     >
       <div style={{ position: "fixed", top: 50, left: 50 }}>
-        <Link to="/products">
+        <Button onClick={() => navigate(-1)}>
           <CloseIcon style={{ fontSize: 60 }} color="secondary" />
-        </Link>
+        </Button>
       </div>
 
       <Box
@@ -75,7 +97,12 @@ function BouquetDetails() {
               >
                 Add To Cart
               </Button>
-              <QuantityPicker qty={qty} setQty={setQty} />
+              <QuantityPicker
+                qty={qty}
+                setQty={setQty}
+                Increment={Increment}
+                Decrement={Decrement}
+              />
             </>
           ) : (
             <Link style={{ textDecoration: "none" }} to="/login">

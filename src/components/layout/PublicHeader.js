@@ -17,6 +17,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import Badge from "@mui/material/Badge";
 
 function PublicHeader() {
   const navigate = useNavigate();
@@ -36,6 +37,8 @@ function PublicHeader() {
 
     navigate("/");
   };
+  const { cartItem } = useSelector((state) => state.cart);
+
   return (
     <AppBar position="static">
       <Container>
@@ -76,7 +79,9 @@ function PublicHeader() {
                     <Button color="secondary">Orders</Button>
                   </Link>
                   <Link to="/cart">
-                    <Button color="secondary">Cart</Button>
+                    <Badge badgeContent={cartItem.length} color="error">
+                      <Button color="secondary">Cart </Button>
+                    </Badge>
                   </Link>
                   <Button onClick={handleOnSignout} color="secondary">
                     SignOut
@@ -154,7 +159,9 @@ function PublicHeader() {
                   </MenuItem>
                   <MenuItem key="cart">
                     <Link to="/cart">
-                      <Button>Cart</Button>
+                      <Badge badgeContent={cartItem.length} color="primary">
+                        <Button>Cart </Button>
+                      </Badge>
                     </Link>
                   </MenuItem>
                   <MenuItem key="signout">

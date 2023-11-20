@@ -5,7 +5,7 @@ import {
   collectOrderAction,
   getUserOrderListAction,
 } from "../../../redux_firebase/order/orderAction";
-import { Typography, Box, Tab, List } from "@mui/material";
+import { Typography, Box, Tab, List, Container } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -40,70 +40,72 @@ function Order() {
   };
   return (
     <UserLayout>
-      <Typography
-        position="sticky"
-        top="70px"
-        zIndex={99}
-        variant="h2"
-        sx={{ backgroundColor: "white" }}
-      >
-        My Orders
-      </Typography>
-      <Box sx={{ width: "100%" }}>
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleOnChange}>
-              <Tab label="Pending" value="tab-0" />
-              <Tab label="Approved" value="tab-1" />
-              <Tab label="Previous Orders" value="tab-2" />
-            </TabList>
-          </Box>
-          <TabPanel value="tab-0">
-            <List
-              sx={{ width: "100%", bgcolor: "background.paper" }}
-              component="nav"
-              aria-labelledby="nested-order-list"
-            >
-              {pendingList.length === 0 ? (
-                <p>Nothing to show here</p>
-              ) : (
-                pendingList.map((item) => <CustomNestedList item={item} />)
-              )}
-            </List>
-          </TabPanel>
-          <TabPanel value="tab-1">
-            <List
-              sx={{ width: "100%", bgcolor: "background.paper" }}
-              component="nav"
-              aria-labelledby="nested-order-list"
-            >
-              {approvedList.length === 0 ? (
-                <p>Nothing to show here</p>
-              ) : (
-                approvedList.map((item) => (
-                  <CustomNestedList
-                    item={item}
-                    handleOnCollect={handleOnCollect}
-                  />
-                ))
-              )}
-            </List>
-          </TabPanel>
-          <TabPanel value="tab-2">
-            <List
-              sx={{ width: "100%", bgcolor: "background.paper" }}
-              component="nav"
-              aria-labelledby="nested-order-list"
-            >
-              {previousList.length === 0 ? (
-                <p>Nothing to show here</p>
-              ) : (
-                previousList.map((item) => <CustomNestedList item={item} />)
-              )}
-            </List>
-          </TabPanel>
-        </TabContext>
-      </Box>
+      <Container>
+        <Typography
+          position="sticky"
+          top="70px"
+          zIndex={99}
+          variant="h2"
+          sx={{ backgroundColor: "white" }}
+        >
+          My Orders
+        </Typography>
+        <Box sx={{ width: "100%" }}>
+          <TabContext value={value}>
+            <Box>
+              <TabList onChange={handleOnChange}>
+                <Tab label="Pending" value="tab-0" />
+                <Tab label="Approved" value="tab-1" />
+                <Tab label="Previous Orders" value="tab-2" />
+              </TabList>
+            </Box>
+            <TabPanel value="tab-0">
+              <List
+                sx={{ width: "100%", bgcolor: "background.paper" }}
+                component="nav"
+                aria-labelledby="nested-order-list"
+              >
+                {pendingList.length === 0 ? (
+                  <p>Nothing to show here</p>
+                ) : (
+                  pendingList.map((item) => <CustomNestedList item={item} />)
+                )}
+              </List>
+            </TabPanel>
+            <TabPanel value="tab-1">
+              <List
+                sx={{ width: "100%", bgcolor: "background.paper" }}
+                component="nav"
+                aria-labelledby="nested-order-list"
+              >
+                {approvedList.length === 0 ? (
+                  <p>Nothing to show here</p>
+                ) : (
+                  approvedList.map((item) => (
+                    <CustomNestedList
+                      item={item}
+                      handleOnCollect={handleOnCollect}
+                    />
+                  ))
+                )}
+              </List>
+            </TabPanel>
+            <TabPanel value="tab-2">
+              <List
+                sx={{ width: "100%", bgcolor: "background.paper" }}
+                component="nav"
+                aria-labelledby="nested-order-list"
+              >
+                {previousList.length === 0 ? (
+                  <p>Nothing to show here</p>
+                ) : (
+                  previousList.map((item) => <CustomNestedList item={item} />)
+                )}
+              </List>
+            </TabPanel>
+          </TabContext>
+        </Box>
+      </Container>
     </UserLayout>
   );
 }

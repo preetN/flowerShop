@@ -16,15 +16,20 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Tooltip,
+  FormGroup,
+  FormControlLabel,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
+  addToCart,
   emptyCart,
   removeFromCart,
 } from "../../../redux_firebase/cart/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { addOrderAction } from "../../../redux_firebase/order/orderAction";
+import Checkbox from "@mui/material/Checkbox";
 
 function Cart() {
   const navigate = useNavigate();
@@ -38,6 +43,10 @@ function Cart() {
 
   const handleOnRemove = (index) => {
     dispatch(removeFromCart(index));
+  };
+  const handleOnAdd = (item) => {
+    console.log(item);
+    dispatch(addToCart(item));
   };
   const handleOnOrder = () => {
     setOrder(true);
@@ -75,10 +84,20 @@ function Cart() {
               <Typography variant="body2">Continue Shopping</Typography>
             </Link>
           </Box>
-
-          <Typography marginTop={"20px"}>
-            Total Items={cartItem.length}
-          </Typography>
+          <Box
+            display={"flex"}
+            justifyContent={"flex-end"}
+            alignItems={"center"}
+          >
+            <Typography marginTop={"20px"}>
+              Total Items={cartItem.length}
+            </Typography>
+            <Tooltip title="Empty Cart">
+              <Button color="secondary" onClick={() => dispatch(emptyCart())}>
+                <DeleteIcon />
+              </Button>
+            </Tooltip>
+          </Box>
         </Box>
 
         <Box display={"flex"} justifyContent={"center"} margin={"50px"}>
@@ -87,31 +106,37 @@ function Cart() {
               <TableHead>
                 <TableRow>
                   <TableCell>Product</TableCell>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Total</TableCell>
+                  <TableCell align="center">Price</TableCell>
+                  <TableCell align="center">Quantity</TableCell>
+                  <TableCell align="center">Action</TableCell>
+
+                  <TableCell align="center">Total</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {cartItem?.map((item, i) => (
                   <TableRow>
                     <TableCell>{item.itemName}</TableCell>
-                    <TableCell align="right">{item.itemPrice}</TableCell>
+                    <TableCell align="center">${item.itemPrice}</TableCell>
 
-                    <TableCell align="right">
-                      {item.itemQty}{" "}
+                    <TableCell align="center">{item.itemQty}</TableCell>
+                    <TableCell align="center">
                       <Button onClick={() => handleOnRemove(i)}>Remove</Button>
+                      <Button onClick={() => handleOnAdd(item)}>
+                        Add More
+                      </Button>
                     </TableCell>
-                    <TableCell align="right">
-                      {item.itemPrice * item.itemQty}
+
+                    <TableCell align="center">
+                      ${item.itemPrice * item.itemQty}
                     </TableCell>
                   </TableRow>
                 ))}
                 <TableRow>
-                  <TableCell align="right" colSpan={3}>
+                  <TableCell align="center" colSpan={4}>
                     Order Total
                   </TableCell>
-                  <TableCell align="right">{total}</TableCell>
+                  <TableCell align="right">${total}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -122,35 +147,47 @@ function Cart() {
             Ready To Order
           </Button>
         )}
-        {order && (
+        {order && cartItem.length > 0 && (
           <>
-            <Accordion>
-              <AccordionSummary>
-                <Typography expandIcon={<ExpandMoreIcon color="secondary" />}>
-                  Shipping Method
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>Pay and Pick up at shop</Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary>
-                <Typography expandIcon={<ExpandMoreIcon color="secondary" />}>
-                  Order Summary
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {cartItem.map((item) => (
-                  <>
-                    <Typography>{item.itemName}</Typography>
-                    <Typography>{item.itemPrice}</Typography>
-                    <Typography>{item.itemQty}</Typography>
-                  </>
-                ))}
-              </AccordionDetails>
-            </Accordion>
+            <Box component={Paper} elevation={4} margin={"50px"}>
+              <Accordion>
+                <AccordionSummary>
+                  <Typography expandIcon={<ExpandMoreIcon color="secondary" />}>
+                    Shipping Method
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox defaultChecked />}
+                      label="Pickup at Shop front"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox disabled />}
+                      label="Delivery"
+                    />
+                  </FormGroup>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion>
+                <AccordionSummary>
+                  <Typography expandIcon={<ExpandMoreIcon color="secondary" />}>
+                    Order Summary
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {cartItem.map((item) => (
+                    <>
+                      <Typography>{item.itemName}</Typography>
+                      <Typography>{item.itemPrice}</Typography>
+                      <Typography>{item.itemQty}</Typography>
+                    </>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            </Box>
             <Button
+              sx={{ marginTop: "10px" }}
               variant="contained"
               color="secondary"
               onClick={handleOnConfirmOrder}
