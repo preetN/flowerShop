@@ -25,7 +25,8 @@ function CustomerQuery() {
   const { queryList } = useSelector((state) => state.query);
   const handleOnSave = (query) => {
     const { id, ...rest } = query;
-    dispatch(updateQueryAction(id, rest));
+    console.log(note);
+    dispatch(updateQueryAction(id, rest, note));
   };
   const handleOnDelete = (id) => {
     dispatch(deleteQuery(id));
@@ -66,17 +67,16 @@ function CustomerQuery() {
                         placeholder={"make a note"}
                         onChange={(e) =>
                           setNote({
-                            ...item,
-                            [e.target.name]: e.target.value,
+                            note: e.target.value,
                           })
                         }
                       />
-                      {item.note && <p>{item.note}</p>}
+                      {note && <p>{item.note}</p>}
                     </TableCell>
                     <TableCell align="right">
                       <IconButton
                         color="success"
-                        onClick={() => handleOnSave(note)}
+                        onClick={() => handleOnSave(item)}
                       >
                         <SaveIcon />
                       </IconButton>
@@ -94,7 +94,6 @@ function CustomerQuery() {
               <TableBody>
                 <TableRow>
                   <TableCell align="center" colSpan={6}>
-                    {" "}
                     ------ No querries to show -----
                   </TableCell>
                 </TableRow>

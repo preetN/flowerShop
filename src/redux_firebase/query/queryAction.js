@@ -40,8 +40,9 @@ export const deleteQuery = (id) => async (dispatch) => {
   await deleteDoc(doc(db, "query", id));
   dispatch(getAllQueryAction());
 };
-export const updateQueryAction = (id, rest) => async (dispatch) => {
+export const updateQueryAction = (id, rest, note) => async (dispatch) => {
   const docRef = doc(db, "query", id);
+  //add note and if it already exists then add to array
   await setDoc(docRef, rest, { merge: true });
   dispatch(getAllQueryAction());
   Store.addNotification({
