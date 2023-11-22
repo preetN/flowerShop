@@ -14,6 +14,7 @@ import {
   Paper,
   TableRow,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import {
   deleteQuery,
@@ -24,9 +25,16 @@ function CustomerQuery() {
   const [note, setNote] = useState({});
   const { queryList } = useSelector((state) => state.query);
   const handleOnSave = (query) => {
-    const { id, ...rest } = query;
-    console.log(note);
-    dispatch(updateQueryAction(id, rest, note));
+    var obj;
+    if (query.note) {
+      console.log(query.note);
+      obj = { ...query, note: [...query.note, note] };
+    } else {
+      obj = { ...query, note: [note] };
+    }
+
+    console.log(obj);
+    dispatch(updateQueryAction(obj));
   };
   const handleOnDelete = (id) => {
     dispatch(deleteQuery(id));
@@ -43,7 +51,8 @@ function CustomerQuery() {
                 <TableCell>Last Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Message</TableCell>
-                <TableCell>Note</TableCell>
+                <TableCell>Add Note</TableCell>
+                <TableCell>Notes</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -65,27 +74,29 @@ function CustomerQuery() {
                       <TextField
                         name={"note"}
                         placeholder={"make a note"}
-                        onChange={(e) =>
-                          setNote({
-                            note: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setNote(e.target.value)}
                       />
-                      {note && <p>{item.note}</p>}
+                    </TableCell>
+                    <TableCell>
+                      {item.note && item.note.map((i) => <p>{i}</p>)}
                     </TableCell>
                     <TableCell align="right">
-                      <IconButton
-                        color="success"
-                        onClick={() => handleOnSave(item)}
-                      >
-                        <SaveIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => handleOnDelete(item.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Tooltip title="Save Note">
+                        <IconButton
+                          color="success"
+                          onClick={() => handleOnSave(item)}
+                        >
+                          <SaveIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Query">
+                        <IconButton
+                          color="error"
+                          onClick={() => handleOnDelete(item.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))}
