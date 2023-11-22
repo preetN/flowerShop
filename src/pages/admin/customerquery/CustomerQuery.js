@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import {
   deleteQuery,
+  getAllQueryAction,
   updateQueryAction,
 } from "../../../redux_firebase/query/queryAction";
 function CustomerQuery() {
@@ -39,7 +40,9 @@ function CustomerQuery() {
   const handleOnDelete = (id) => {
     dispatch(deleteQuery(id));
   };
-
+  useEffect(() => {
+    dispatch(getAllQueryAction());
+  }, [dispatch]);
   return (
     <AdminLayout>
       <Box component="div">

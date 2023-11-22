@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { getAllOrderAction } from "../../redux_firebase/order/orderAction";
 import { getAllQueryAction } from "../../redux_firebase/query/queryAction";
-
 function AdminDashboard() {
   const dispatch = useDispatch();
   dispatch(getAllQueryAction());

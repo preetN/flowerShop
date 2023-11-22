@@ -22,8 +22,9 @@ export default function CustomCard({
   return (
     <Card
       sx={{ width: 345 }}
-      onMouseOver={() => setFlip(true)}
-      onClick={() => setFlip(false)}
+      onHover={() => setFlip(!flip)}
+      // onMouseOver={() => setFlip(!flip)}
+      onClick={() => setFlip(!flip)}
     >
       <ReactCardFlip isFlipped={flip} flipDirection="vertical">
         <Box>
