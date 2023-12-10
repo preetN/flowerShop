@@ -48,6 +48,14 @@ input[type="number"] {
   -webkit-text-fill-color: transparent;
   transition: 1s;
 }
+
+.cardflip:hover {
+  cursor: pointer;
+
+  transform: scale(1.1);
+  transition: all 0.3s ease-in;
+}
+
 .welcome:hover {
   font-size: 120px;
   background: linear-gradient(green, black);
