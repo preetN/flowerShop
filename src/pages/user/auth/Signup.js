@@ -8,7 +8,10 @@ import { Store } from "react-notifications-component";
 import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
 import { useDispatch } from "react-redux";
-import { getUserAction } from "../../../redux_firebase/user/userAction";
+import {
+  createUser,
+  getUserAction,
+} from "../../../redux_firebase/user/userAction";
 import UserLayout from "../../../components/layout/UserLayout";
 
 function Signup() {
@@ -67,34 +70,8 @@ function Signup() {
       });
       return;
     }
-    createUserWithEmailAndPassword(auth, form.email, form.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        //creating admin named database and adding admin information to it
-        const { password, confirmpassword, ...rest } = form;
-        setDoc(doc(db, "user", user.uid), rest)
-          .then(() => console.log("Done"))
-          .catch(() => console.log("Error"));
-        Store.addNotification({
-          ...notification,
-          title: "LogIn successful",
-          message: "Welcome " + user.email,
-          type: "success",
-        });
-        dispatch(getUserAction(user.uid));
-
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-        Store.addNotification({
-          ...notification,
-          title: "Fail",
-          message: errorMessage,
-          type: "danger",
-        });
-      });
+    createUser(form);
+    navigate("/");
   };
   return (
     <UserLayout>

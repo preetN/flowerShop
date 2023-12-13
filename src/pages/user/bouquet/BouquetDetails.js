@@ -66,7 +66,7 @@ function BouquetDetails() {
     >
       <div style={{ position: "fixed", top: 50, left: 50 }}>
         <Button onClick={() => navigate(-1)}>
-          <CloseIcon style={{ fontSize: 60 }} color="secondary" />
+          <CloseIcon color="secondary" />
         </Button>
       </div>
 

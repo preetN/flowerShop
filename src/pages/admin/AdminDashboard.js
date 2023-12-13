@@ -13,9 +13,6 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
   RadialBarChart,
   RadialBar,
 } from "recharts";

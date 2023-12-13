@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import { IconButton, Stack, Paper, Box } from "@mui/material";
-import { auth } from "../../../config/FireBase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Store } from "react-notifications-component";
-import { notification } from "../../../components/notification/Notify";
 import CustomInput from "../../../components/custominput/CustomInput";
-import { getUserAction } from "../../../redux_firebase/user/userAction";
+import { loginUser } from "../../../redux_firebase/user/userAction";
 import { getUserOrderListAction } from "../../../redux_firebase/order/orderAction";
 import UserLayout from "../../../components/layout/UserLayout";
 function Login() {
@@ -36,26 +32,7 @@ function Login() {
   ];
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, form.email, form.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        dispatch(getUserAction(user.uid));
-        Store.addNotification({
-          ...notification,
-          title: "Success",
-          message: "Login Successful",
-          type: "success",
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        Store.addNotification({
-          ...notification,
-          title: "Fail",
-          message: errorMessage,
-          type: "danger",
-        });
-      });
+    dispatch(loginUser(form));
   };
   return (
     <UserLayout>
@@ -96,10 +73,6 @@ function Login() {
           <Box>
             <Link className="link" to="/signup">
               Don't have an account, Signup Now
-            </Link>
-
-            <Link className="link" to="/admin-login">
-              Login as Admin
             </Link>
           </Box>
         </Stack>

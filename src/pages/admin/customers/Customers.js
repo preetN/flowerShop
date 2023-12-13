@@ -1,6 +1,6 @@
 import React from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Table,
@@ -11,8 +11,14 @@ import {
   TableRow,
   TableCell,
 } from "@mui/material";
+import { getAllUserAction } from "../../../redux_firebase/user/userAction";
 function Customers() {
+  const dispatch = useDispatch();
+
+  dispatch(getAllUserAction());
+
   const { usersList } = useSelector((state) => state.user);
+
   return (
     <AdminLayout>
       <Box component="div">

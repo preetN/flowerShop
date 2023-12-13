@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import { IconButton, Stack, Paper } from "@mui/material";
-import { auth } from "../../../config/FireBase";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAdminAction } from "../../../redux_firebase/admin/adminAction";
-import { Store } from "react-notifications-component";
-import { notification } from "../../../components/notification/Notify";
+import { loginAdmin } from "../../../redux_firebase/admin/adminAction";
 import CustomInput from "../../../components/custominput/CustomInput";
 import bckImg from "../../../asset/images/background.avif";
 
@@ -36,26 +32,7 @@ function AdminLogin() {
   ];
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, form.email, form.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const a = dispatch(getAdminAction(user.uid));
-        Store.addNotification({
-          ...notification,
-          title: "Success",
-          message: "Admin Login Successful",
-          type: "success",
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        Store.addNotification({
-          ...notification,
-          title: "Fail",
-          message: errorMessage,
-          type: "danger",
-        });
-      });
+    dispatch(loginAdmin(form));
   };
   return (
     <div
