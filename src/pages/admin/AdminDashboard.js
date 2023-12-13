@@ -2,25 +2,170 @@ import React from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
 import { getAllUserAction } from "../../redux_firebase/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Typography } from "@mui/material";
+import { Paper, Box, Typography } from "@mui/material";
 import { getAllOrderAction } from "../../redux_firebase/order/orderAction";
 import { getAllQueryAction } from "../../redux_firebase/query/queryAction";
+import {
+  Line,
+  LineChart,
+  Legend,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  RadialBarChart,
+  RadialBar,
+} from "recharts";
+import RedeemIcon from "@mui/icons-material/Redeem";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import PeopleIcon from "@mui/icons-material/People";
+const style = {
+  top: "50%",
+  right: 0,
+  transform: "translate(0, -50%)",
+  lineHeight: "24px",
+};
 function AdminDashboard() {
   const dispatch = useDispatch();
-  dispatch(getAllQueryAction());
-  dispatch(getAllUserAction());
-  dispatch(getAllOrderAction());
+  // dispatch(getAllQueryAction());
+  // dispatch(getAllUserAction());
+  // dispatch(getAllOrderAction());
+  const { usersList } = useSelector((state) => state.user);
+
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const { admin } = useSelector((state) => state.admin);
+  const { orderList } = useSelector((state) => state.order);
+  const pendingList = orderList.filter((item) => item.status === "pending");
+  const approvedList = orderList.filter((item) => item.status === "approved");
+  const completedList = orderList.filter((item) => item.status === "collected");
+  const { queryList } = useSelector((state) => state.query);
+
   console.log(bouquetlist.length, " ", admin);
+
+  const orderdata = [
+    {
+      name: "approved",
+      value: approvedList.length,
+      fill: "#82ca9d",
+    },
+    {
+      name: "pending",
+      value: pendingList.length,
+      fill: "#a4de6c",
+    },
+
+    {
+      name: "completed",
+      value: completedList.length,
+      fill: "#83a6ed",
+    },
+    {
+      name: "Total orders",
+      value: orderList.length,
+      fill: "#8884d8",
+    },
+  ];
+
+  const pricedata = bouquetlist.map((b) => ({ name: b.bname, price: b.price }));
+
   return (
     <AdminLayout>
-      <Typography variant="h3">
+      <Typography variant="h3" align="center" margin={"15px"}>
         Hello {admin.fname} {admin.lname}, Welocme to Dashboard
       </Typography>
-      <Typography variant="body1">
-        Today, we have total {bouquetlist.length} categories of bouquets.
-      </Typography>
+      <Box display={"flex"} justifyContent={"space-evenly"}>
+        <Paper elevation={4} sx={{ width: "fit-content", padding: "10px" }}>
+          <LineChart
+            width={700}
+            height={300}
+            data={pricedata}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="price"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </Paper>
+        <Paper elevation={4} sx={{ width: "fit-content", padding: "10px" }}>
+          <Typography variant="h5" align="center">
+            Orders Statistics
+          </Typography>
+
+          <RadialBarChart
+            width={400}
+            height={250}
+            cx="50%"
+            cy="50%"
+            innerRadius="10%"
+            outerRadius="80%"
+            barSize={15}
+            data={orderdata}
+          >
+            <RadialBar
+              minAngle={15}
+              label={{ position: "insideStart", fill: "#fff" }}
+              background
+              clockWise
+              dataKey="value"
+            />
+            <Legend
+              iconSize={10}
+              layout="vertical"
+              verticalAlign="middle"
+              wrapperStyle={style}
+            />
+          </RadialBarChart>
+        </Paper>
+      </Box>
+
+      <Paper
+        elevation={4}
+        sx={{
+          padding: "20px",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          marginTop: "10px",
+        }}
+      >
+        <Paper elevation={3} className="tab">
+          <PeopleIcon color="success" fontSize="large" />
+          <Typography variant="overline">{usersList.length}</Typography>
+          <Typography variant="button">Users</Typography>
+        </Paper>
+        <Paper elevation={3} className="tab">
+          <RedeemIcon color="warning" fontSize="large" />
+          <Typography variant="overline">{orderList.length}</Typography>
+          <Typography variant="button">Orders</Typography>
+        </Paper>
+        <Paper elevation={3} className="tab">
+          <LocalFloristIcon color="primary" fontSize="large" />
+          <Typography variant="overline">{bouquetlist.length}</Typography>
+          <Typography variant="button">Bouquets</Typography>
+        </Paper>
+        <Paper elevation={3} className="tab">
+          <HelpCenterIcon color="error" fontSize="large" />
+          <Typography variant="overline">{queryList.length}</Typography>
+          <Typography variant="button">Queries</Typography>
+        </Paper>
+      </Paper>
     </AdminLayout>
   );
 }

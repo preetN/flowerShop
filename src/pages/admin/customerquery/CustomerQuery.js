@@ -34,7 +34,6 @@ function CustomerQuery() {
       obj = { ...query, note: [note] };
     }
 
-    console.log(obj);
     dispatch(updateQueryAction(obj));
   };
   const handleOnDelete = (id) => {

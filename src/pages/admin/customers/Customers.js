@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 function Customers() {
   const { usersList } = useSelector((state) => state.user);
-  console.log(usersList);
   return (
     <AdminLayout>
       <Box component="div">

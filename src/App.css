@@ -18,7 +18,13 @@ input[type="number"] {
   margin-left: 10px;
   margin-right: 10px;
 }
-
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 15px;
+}
 .background {
   background-repeat: no-repeat;
   background-image: url("./asset/images/background.avif");
@@ -69,11 +75,6 @@ input[type="number"] {
 }
 .card:hover .card-img {
   opacity: 0.5;
-}
-.cardflip:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-  transition: all 0.3s ease-in;
 }
 
 .welcome:hover {
