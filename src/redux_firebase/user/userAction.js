@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { setAdmin } from "../admin/adminSlice";
 
 export const createUser = async (form) => {
   createUserWithEmailAndPassword(auth, form.email, form.password)
@@ -56,6 +57,14 @@ export const getUserAction = (uid) => async (dispatch) => {
   const docSnap = await getDoc(docRef);
   if (docSnap.exists() && docSnap.data().type === "user") {
     dispatch(setUser({ uid, ...docSnap.data() }));
+    Store.addNotification({
+      ...notification,
+      title: "Success",
+      message: "Login Successful",
+      type: "success",
+    });
+  } else if (docSnap.exists() && docSnap.data().type === "admin") {
+    dispatch(setAdmin({ uid, ...docSnap.data() }));
     Store.addNotification({
       ...notification,
       title: "Success",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserLayout from "../../../components/layout/UserLayout";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -38,6 +38,9 @@ function Cart() {
   const dispatch = useDispatch();
   const [order, setOrder] = useState(false);
   const { cartItem } = useSelector((state) => state.cart);
+  useEffect(() => {
+    user?.uid === undefined && navigate("/");
+  }, [user, navigate]);
   const total = cartItem
     .map((item) => item.itemPrice * item.itemQty)
     .reduce((sum, i) => sum + i, 0);

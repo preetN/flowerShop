@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router";
-import AdminLogin from "./pages/admin/auth/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminOrder from "./pages/admin/orders/AdminOrder";
 import Customers from "./pages/admin/customers/Customers";
@@ -52,7 +51,6 @@ function App() {
       <ReactNotifications />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="bouquetdetails/:id" element={<BouquetDetails />} />

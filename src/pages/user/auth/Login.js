@@ -11,9 +11,14 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  const { admin } = useSelector((state) => state.admin);
+
   useEffect(() => {
     user?.uid && navigate("/");
   }, [user, navigate]);
+  useEffect(() => {
+    admin?.uid && navigate("/admin-dashboard");
+  }, [admin, navigate]);
   dispatch(getUserOrderListAction(user.email));
   const [form, setForm] = useState({});
   const inputfield = [

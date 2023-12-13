@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserLayout from "../../components/layout/UserLayout";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,6 +19,7 @@ import { updateUserAction } from "../../redux_firebase/user/userAction";
 function Profile() {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     fname: user.fname,
     lname: user.lname,
@@ -27,6 +28,9 @@ function Profile() {
   });
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    user?.uid === undefined && navigate("/");
+  }, [user, navigate]);
   const inputfield = [
     {
       id: "fname",

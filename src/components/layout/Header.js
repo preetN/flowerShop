@@ -32,7 +32,7 @@ function Header() {
       dispatch(setAdmin({}));
     });
 
-    navigate("/admin-login");
+    navigate("/login");
   };
   return (
     <AppBar position="static">
