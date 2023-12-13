@@ -35,7 +35,6 @@ function AdminDashboard() {
   // dispatch(getAllUserAction());
   // dispatch(getAllOrderAction());
   const { usersList } = useSelector((state) => state.user);
-
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const { admin } = useSelector((state) => state.admin);
   const { orderList } = useSelector((state) => state.order);
@@ -43,8 +42,6 @@ function AdminDashboard() {
   const approvedList = orderList.filter((item) => item.status === "approved");
   const completedList = orderList.filter((item) => item.status === "collected");
   const { queryList } = useSelector((state) => state.query);
-
-  console.log(bouquetlist.length, " ", admin);
 
   const orderdata = [
     {
@@ -77,16 +74,34 @@ function AdminDashboard() {
       <Typography variant="h3" align="center" margin={"15px"}>
         Hello {admin.fname} {admin.lname}, Welocme to Dashboard
       </Typography>
-      <Box display={"flex"} justifyContent={"space-evenly"}>
-        <Paper elevation={4} sx={{ width: "fit-content", padding: "10px" }}>
+
+      <Box
+        margin={"20px"}
+        display={"flex"}
+        alignItems={"stretch"}
+        gap={"10px"}
+        sx={{
+          flexDirection: { xs: "column", lg: "row" },
+          justifyContent: { xs: "center", lg: "space-evenly" },
+        }}
+      >
+        <Paper
+          elevation={4}
+          sx={{
+            height: "auto",
+            width: { md: "fit-content" },
+            overflowX: "scroll",
+            padding: "20px",
+          }}
+        >
           <LineChart
             width={700}
             height={300}
             data={pricedata}
             margin={{
               top: 5,
-              right: 30,
-              left: 20,
+              right: 10,
+              left: 10,
               bottom: 5,
             }}
           >
@@ -103,7 +118,14 @@ function AdminDashboard() {
             />
           </LineChart>
         </Paper>
-        <Paper elevation={4} sx={{ width: "fit-content", padding: "10px" }}>
+        <Paper
+          elevation={4}
+          sx={{
+            width: { md: "fit-content" },
+            padding: "10px",
+            overflowX: { xs: "scroll" },
+          }}
+        >
           <Typography variant="h5" align="center">
             Orders Statistics
           </Typography>
@@ -138,9 +160,12 @@ function AdminDashboard() {
       <Paper
         elevation={4}
         sx={{
-          padding: "20px",
+          margin: "20px",
+          padding: "10px",
           display: "flex",
+          gap: "10px",
           flexDirection: "row",
+          flexWrap: "wrap",
           justifyContent: "space-evenly",
           marginTop: "10px",
         }}

@@ -74,16 +74,16 @@ function Cart() {
   return (
     <UserLayout>
       <Container>
-        <Box margin={"50px"}>
+        <Box sx={{ margin: { md: "50px" } }}>
           <Box
-            display={"flex"}
+            sx={{ display: { sm: "flex" } }}
             justifyContent={"space-between"}
             alignItems={"center"}
           >
             <Typography variant="h2">Your Shopping Cart</Typography>
             <Box
               display={"flex"}
-              justifyContent={"flex-end"}
+              sx={{ justifyContent: { xs: "space-evenly", md: "flex-end" } }}
               alignItems={"center"}
             >
               <Link to="/products">
@@ -98,7 +98,11 @@ function Cart() {
           </Box>
         </Box>
 
-        <Box display={"flex"} justifyContent={"center"} margin={"50px"}>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          sx={{ margin: { md: "50px" } }}
+        >
           <TableContainer component={Paper} sx={{ maxWidth: 1000 }}>
             <Table sx={{ minWidth: 450 }} aria-label="shopping cart">
               <TableHead>

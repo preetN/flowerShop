@@ -5,13 +5,15 @@ import { Box } from "@mui/material";
 function UserLayout({ children }) {
   return (
     <>
-      <div style={{ position: "sticky", top: "0", zIndex: 99 }}>
-        <PublicHeader />
-      </div>
+      <Box display={"flex"} flexDirection={"column"} sx={{ flexGrow: 1 }}>
+        <div style={{ position: "sticky", top: "0", zIndex: 99 }}>
+          <PublicHeader />
+        </div>
 
-      <Box minHeight="75vh">{children}</Box>
+        <Box minHeight="75vh">{children}</Box>
 
-      <Footer />
+        <Footer />
+      </Box>
     </>
   );
 }

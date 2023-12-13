@@ -1,4 +1,4 @@
-import { List, Box, ListItem, Button } from "@mui/material";
+import { List, Box, ListItem, Button, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -44,7 +44,7 @@ function SideNav() {
   ];
   return (
     <Box bgcolor="text.secondary">
-      <List>
+      <List sx={{ top: "50px" }}>
         {pages.map((page, i) => (
           <ListItem key={i}>
             <Link to={page.path} style={{ textDecoration: "none" }}>

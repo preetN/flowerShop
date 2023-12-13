@@ -6,22 +6,14 @@ import SideNav from "./SideNav";
 function AdminLayout({ children }) {
   return (
     <>
-      <Header />
-
-      <Box sx={{ display: "flex" }}>
+      <Box display={"flex"} width={"100%"}>
         <SideNav />
-        <Box
-          minHeight="72vh"
-          margin="20px"
-          sx={{
-            width: "80%",
-          }}
-        >
-          {children}
+        <Box sx={{ width: { xs: "90%", lg: "80%" }, flexGrow: 1 }}>
+          <Header />
+          <Box minHeight="72vh">{children}</Box>
+          <Footer />
         </Box>
       </Box>
-
-      <Footer />
     </>
   );
 }

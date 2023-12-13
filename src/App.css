@@ -91,3 +91,11 @@ input[type="number"] {
     transform: translateY(-5px) rotate(-9deg);
   }
 }
+@media (max-width: 500px) {
+  .welcome {
+    font-size: 50px;
+  }
+  .welcome:hover {
+    font-size: 70px;
+  }
+}
