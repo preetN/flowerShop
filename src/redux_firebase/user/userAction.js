@@ -20,8 +20,8 @@ export const createUser = async (form) => {
         .catch(() => console.log("Error"));
       Store.addNotification({
         ...notification,
-        title: "LogIn successful",
-        message: "Successfully created new admin " + user.email,
+        title: "SignUp successful",
+        message: "Successfully created  " + user.email,
         type: "success",
       });
     })

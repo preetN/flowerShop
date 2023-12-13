@@ -37,6 +37,9 @@ function App() {
       secondary: {
         main: green[900],
       },
+      border: {
+        main: "#8884d8",
+      },
     },
   });
   const dispatch = useDispatch();

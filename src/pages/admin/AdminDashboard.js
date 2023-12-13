@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
 import { getAllUserAction } from "../../redux_firebase/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Paper, Box, Typography } from "@mui/material";
+import { Paper, Box, Typography, Button, IconButton } from "@mui/material";
 import { getAllOrderAction } from "../../redux_firebase/order/orderAction";
 import { getAllQueryAction } from "../../redux_firebase/query/queryAction";
 import {
@@ -20,6 +20,7 @@ import RedeemIcon from "@mui/icons-material/Redeem";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import PeopleIcon from "@mui/icons-material/People";
+import { useNavigate } from "react-router-dom";
 const style = {
   top: "50%",
   right: 0,
@@ -28,9 +29,12 @@ const style = {
 };
 function AdminDashboard() {
   const dispatch = useDispatch();
-  // dispatch(getAllQueryAction());
-  // dispatch(getAllUserAction());
-  // dispatch(getAllOrderAction());
+  useEffect(() => {
+    dispatch(getAllQueryAction());
+    dispatch(getAllUserAction());
+    dispatch(getAllOrderAction());
+  }, [dispatch]);
+  console.log("hello");
   const { usersList } = useSelector((state) => state.user);
   const { bouquetlist } = useSelector((state) => state.bouquet);
   const { admin } = useSelector((state) => state.admin);
@@ -39,7 +43,7 @@ function AdminDashboard() {
   const approvedList = orderList.filter((item) => item.status === "approved");
   const completedList = orderList.filter((item) => item.status === "collected");
   const { queryList } = useSelector((state) => state.query);
-
+  const navigate = useNavigate();
   const orderdata = [
     {
       name: "approved",
@@ -167,26 +171,57 @@ function AdminDashboard() {
           marginTop: "10px",
         }}
       >
-        <Paper elevation={3} className="tab">
+        <Button
+          className="tab"
+          variant="outlined"
+          color="border"
+          onClick={() => {
+            navigate("/customers");
+          }}
+        >
           <PeopleIcon color="success" fontSize="large" />
           <Typography variant="overline">{usersList.length}</Typography>
           <Typography variant="button">Users</Typography>
-        </Paper>
-        <Paper elevation={3} className="tab">
+        </Button>
+        <Button
+          className="tab"
+          variant="outlined"
+          color="border"
+          onClick={() => {
+            navigate("/admin-orders");
+          }}
+        >
           <RedeemIcon color="warning" fontSize="large" />
           <Typography variant="overline">{orderList.length}</Typography>
           <Typography variant="button">Orders</Typography>
-        </Paper>
-        <Paper elevation={3} className="tab">
-          <LocalFloristIcon color="primary" fontSize="large" />
+        </Button>
+        <Button
+          className="tab"
+          variant="outlined"
+          color="border"
+          onClick={() => {
+            navigate("/bouquet");
+          }}
+        >
+          <LocalFloristIcon color="action" fontSize="large" />
           <Typography variant="overline">{bouquetlist.length}</Typography>
           <Typography variant="button">Bouquets</Typography>
-        </Paper>
-        <Paper elevation={3} className="tab">
-          <HelpCenterIcon color="error" fontSize="large" />
+        </Button>
+        <Button
+          className="tab"
+          variant="outlined"
+          color="border"
+          onClick={() => {
+            navigate("/customerquery");
+          }}
+        >
+          <IconButton>
+            <HelpCenterIcon color="error" fontSize="large" />
+          </IconButton>
+
           <Typography variant="overline">{queryList.length}</Typography>
           <Typography variant="button">Queries</Typography>
-        </Paper>
+        </Button>
       </Paper>
     </AdminLayout>
   );
